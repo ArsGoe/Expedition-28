@@ -8,6 +8,9 @@
 using namespace glbasimac;
 using namespace STP3D;
 
+/* Formes Gare */
+IndexedMesh* rectangle;
+
 /* Window properties */
 static const unsigned int WINDOW_WIDTH = 1200;
 static const unsigned int WINDOW_HEIGHT = 800;
