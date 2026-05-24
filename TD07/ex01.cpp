@@ -64,10 +64,12 @@ void onKey(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods
 		case GLFW_KEY_R :
 			//> EXO 3
 			//< FIN EXO 3
+			dist_zoom += 1;
 			break;
 		case GLFW_KEY_T :
 			//> EXO 3
 			//< FIN EXO 3
+			dist_zoom -= 1;
 			break;
 		default: std::cerr<<"Touche non gérée "<<key<<std::endl;
 	}

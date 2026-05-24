@@ -6,44 +6,82 @@ float angle_phy {30.0};      // Angle between z axis and viewpoint
 float dist_zoom {30.0};      // Distance between origin and viewpoint
 
 GLBI_Engine myEngine;
-GLBI_Set_Of_Points somePoints(3);
-GLBI_Convex_2D_Shape ground{3};
+
+IndexedMesh* cylinder;
+GLBI_Convex_2D_Shape cercle{3};
+GLBI_Set_Of_Points x{3};
+GLBI_Set_Of_Points y{3};
+GLBI_Set_Of_Points z{3};
 
 void initScene() {
-	std::vector<float> points {0.0,0.0,0.0};
-	somePoints.initSet(points,1.0,1.0,1.0);
+	std::vector<float> points_x {0.0, 0.0, 0.0,
+								10.0, 0.0, 0.0};
+	std::vector<float> points_color_x {1.0, 0.0, 0.0,
+								1.0, 0.0, 0.0};
+	x.initSet(points_x,points_color_x);
+	x.changeNature(GL_LINES);
 
-	std::vector<float> baseCarre{-10.0,-10.0,0.0,
-								 10.0,-10.0,0.0,
-								 10.0,10.0,0.0,
-								 -10.0,10.0,0.0};
-	ground.initShape(baseCarre);
-	ground.changeNature(GL_TRIANGLE_FAN);
+	std::vector<float> points_y {0.0, 0.0, 0.0,
+								0.0, 10.0, 0.0};
+	std::vector<float> points_color_y {0.0, 1.0, 0.0,
+										0.0, 1.0, 0.0};
+	y.initSet(points_y,points_color_y);
+	y.changeNature(GL_LINES);
+
+	std::vector<float> points_z {0.0, 0.0, 0.0,
+								0.0, 0.0, 10.0};
+	std::vector<float> points_color_z {0.0, 0.0, 1.0,
+										0.0, 0.0, 1.0};
+	z.initSet(points_z,points_color_z);
+	z.changeNature(GL_LINES);
+
+	cylinder = basicCylinder(1.0, 1.0);
+	cylinder->createVAO();
+
+	int nbPointDuCercle { 100 };
+	int rayon { 1 };
+	std::vector<float> initCercle {};
+	for(int i { 0 }; i < nbPointDuCercle; i++) {
+		float angle = 2 * M_PI * i / nbPointDuCercle;
+		initCercle.push_back(sin(angle) * rayon);
+		initCercle.push_back(0.0f);
+		initCercle.push_back(cos(angle) * rayon);
+	}
+
+	cercle.initShape(initCercle);
+	cercle.changeNature(GL_TRIANGLE_FAN);
 }
 
-void drawFrame() {
-	// TO DO
+void drawCylindreFerme() {
+	myEngine.setFlatColor(1.0, 0.0, 0.0);
+	cercle.drawShape();
+	myEngine.setFlatColor(1.0, 1.0, 1.0);
+	cylinder->draw();
+
+	myEngine.mvMatrixStack.pushMatrix();
+
+		myEngine.mvMatrixStack.addTranslation({ 0.0f, 1.f, 0.0f }); // Correction de la taille
+		myEngine.updateMvMatrix();
+
+		myEngine.setFlatColor(1.0, 0.0, 0.0); // Conversion des couleurs en [0, 1]
+		cercle.drawShape();
+
+	myEngine.mvMatrixStack.popMatrix();
+	myEngine.updateMvMatrix();
 }
 
-void drawBase() {
-	// TO DO
+
+
+void axes(){
+	x.drawSet();
+	y.drawSet();
+	z.drawSet();
 }
 
-void drawArm() {
-	// TO DO
-}
 
-void drawPan() {
-	// TO DO
-}
 
 void drawScene() {
-	glPointSize(10.0);
-
-	somePoints.drawSet();
-
-	myEngine.setFlatColor(0.2,0.0,0.0);
-	ground.drawShape();
+	
 }
 
 
