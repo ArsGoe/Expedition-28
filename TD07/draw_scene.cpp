@@ -58,9 +58,15 @@ void initCylinder(){
 	cercle.changeNature(GL_TRIANGLE_FAN);
 }
 
+void initCube(){
+	cube = basicCube(1.0f);
+	cube->createVAO();
+}
+
 void initScene() {
 	initAxes();
 	initCylinder();
+	initCube();
 }
 
 void drawCylindreFerme() {
@@ -81,26 +87,8 @@ void drawCylindreFerme() {
 	myEngine.updateMvMatrix();
 }
 
-
-
-void axes(){
-	x.drawSet();
-	y.drawSet();
-	z.drawSet();
-}
-
-
-
-void drawScene() {
-/* 	glPointSize(10.0);
-
-	somePoints.drawSet();
-
-	myEngine.setFlatColor(0.2,0.0,0.0);
-	ground.drawShape();
- */
-	//Gare
-	/* myEngine.mvMatrixStack.pushMatrix();
+void drawBatimentGare(){
+	myEngine.mvMatrixStack.pushMatrix();
 
 		myEngine.mvMatrixStack.addHomothety({20.f, 15.f, 10.f});
 
@@ -109,18 +97,18 @@ void drawScene() {
 		cube->draw();
 
 	myEngine.mvMatrixStack.popMatrix();
-	myEngine.updateMvMatrix(); */
+	myEngine.updateMvMatrix(); 
+}
 
-	//Fenêtre
-	myEngine.mvMatrixStack.pushMatrix();
+void axes(){
+	x.drawSet();
+	y.drawSet();
+	z.drawSet();
+}
 
-		myEngine.setFlatColor(124.0f/255.0f, 136.0f/255.0f, 132.0f/255.0f);
-		sphere->draw();
-
-	myEngine.mvMatrixStack.popMatrix();
-	myEngine.updateMvMatrix();
-
-	
+void drawScene() {
+	axes();
+	drawBatimentGare();
 }
 
 
