@@ -17,7 +17,7 @@ GLBI_Set_Of_Points z{3};
 IndexedMesh* cube;
 IndexedMesh* sphere;
 
-void initScene() {
+void initAxes(){
 	std::vector<float> points_x {0.0, 0.0, 0.0,
 								10.0, 0.0, 0.0};
 	std::vector<float> points_color_x {1.0, 0.0, 0.0,
@@ -38,7 +38,9 @@ void initScene() {
 										0.0, 0.0, 1.0};
 	z.initSet(points_z,points_color_z);
 	z.changeNature(GL_LINES);
+}
 
+void initCylinder(){
 	cylinder = basicCylinder(1.0, 1.0);
 	cylinder->createVAO();
 
@@ -54,6 +56,11 @@ void initScene() {
 
 	cercle.initShape(initCercle);
 	cercle.changeNature(GL_TRIANGLE_FAN);
+}
+
+void initScene() {
+	initAxes();
+	initCylinder();
 }
 
 void drawCylindreFerme() {
