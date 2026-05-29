@@ -18,6 +18,7 @@ IndexedMesh* cube;
 IndexedMesh* sphere;
 
 void initAxes(){
+	//X EN ROUGE
 	std::vector<float> points_x {0.0, 0.0, 0.0,
 								10.0, 0.0, 0.0};
 	std::vector<float> points_color_x {1.0, 0.0, 0.0,
@@ -25,6 +26,7 @@ void initAxes(){
 	x.initSet(points_x,points_color_x);
 	x.changeNature(GL_LINES);
 
+	//Y EN VERT
 	std::vector<float> points_y {0.0, 0.0, 0.0,
 								0.0, 10.0, 0.0};
 	std::vector<float> points_color_y {0.0, 1.0, 0.0,
@@ -32,6 +34,7 @@ void initAxes(){
 	y.initSet(points_y,points_color_y);
 	y.changeNature(GL_LINES);
 
+	//Z EN BLEU
 	std::vector<float> points_z {0.0, 0.0, 0.0,
 								0.0, 0.0, 10.0};
 	std::vector<float> points_color_z {0.0, 0.0, 1.0,
@@ -70,9 +73,9 @@ void initScene() {
 }
 
 void drawCylindreFerme() {
-	myEngine.setFlatColor(1.0, 0.0, 0.0);
+	//myEngine.setFlatColor(1.0, 0.0, 0.0);
 	cercle.drawShape();
-	myEngine.setFlatColor(1.0, 1.0, 1.0);
+	//myEngine.setFlatColor(1.0, 1.0, 1.0);
 	cylinder->draw();
 
 	myEngine.mvMatrixStack.pushMatrix();
@@ -80,11 +83,92 @@ void drawCylindreFerme() {
 		myEngine.mvMatrixStack.addTranslation({ 0.0f, 1.f, 0.0f }); // Correction de la taille
 		myEngine.updateMvMatrix();
 
-		myEngine.setFlatColor(1.0, 0.0, 0.0); // Conversion des couleurs en [0, 1]
+		//myEngine.setFlatColor(1.0, 0.0, 0.0); // Conversion des couleurs en [0, 1]
 		cercle.drawShape();
 
 	myEngine.mvMatrixStack.popMatrix();
 	myEngine.updateMvMatrix();
+}
+
+void drawFenetre(){
+	//Cylindre
+	myEngine.mvMatrixStack.pushMatrix();
+
+		myEngine.mvMatrixStack.addHomothety({10.f, 1.f, 10.f});
+
+		myEngine.updateMvMatrix();
+		myEngine.setFlatColor(168.0f/255.0f, 217.0f/255.0f, 217.0f/255.0f);
+		drawCylindreFerme();
+
+	myEngine.mvMatrixStack.popMatrix();
+	myEngine.updateMvMatrix(); 
+
+	//Rectangle
+	myEngine.mvMatrixStack.pushMatrix();
+
+		myEngine.mvMatrixStack.addTranslation({0.f, 0.5f, -13.f});
+		myEngine.mvMatrixStack.addHomothety({20.f, 1.f, 25.f});
+
+		myEngine.updateMvMatrix();
+		myEngine.setFlatColor(168.0f/255.0f, 217.0f/255.0f, 217.0f/255.0f);
+		cube->draw();
+
+	myEngine.mvMatrixStack.popMatrix();
+	myEngine.updateMvMatrix(); 
+
+	//Cadre verticale
+	myEngine.mvMatrixStack.pushMatrix();
+
+		myEngine.mvMatrixStack.addTranslation({0.0f, 1.0f, -7.5f});
+		myEngine.mvMatrixStack.addHomothety({1.f, 1.f, 35.f});
+
+		myEngine.updateMvMatrix();
+		myEngine.setFlatColor(101.0f/255.0f, 140.0f/255.0f, 136.0f/255.0f);
+		cube->draw();
+
+	myEngine.mvMatrixStack.popMatrix();
+	myEngine.updateMvMatrix(); 
+
+	//Cadre horizontal
+	myEngine.mvMatrixStack.pushMatrix();
+
+		myEngine.mvMatrixStack.addTranslation({0.0f, 1.0f, 0.5f});
+		myEngine.mvMatrixStack.addRotation(M_PI / 2, {0.f, 1.f, 0.f});
+		myEngine.mvMatrixStack.addHomothety({1.f, 1.f, 20.f});
+
+		myEngine.updateMvMatrix();
+		myEngine.setFlatColor(101.0f/255.0f, 140.0f/255.0f, 136.0f/255.0f);
+		cube->draw();
+
+	myEngine.mvMatrixStack.popMatrix();
+	myEngine.updateMvMatrix(); 
+
+
+	myEngine.mvMatrixStack.pushMatrix();
+
+		myEngine.mvMatrixStack.addTranslation({0.0f, 1.0f, -8.5f});
+		myEngine.mvMatrixStack.addRotation(M_PI / 2, {0.f, 1.f, 0.f});
+		myEngine.mvMatrixStack.addHomothety({1.f, 1.f, 20.f});
+
+		myEngine.updateMvMatrix();
+		myEngine.setFlatColor(101.0f/255.0f, 140.0f/255.0f, 136.0f/255.0f);
+		cube->draw();
+
+	myEngine.mvMatrixStack.popMatrix();
+	myEngine.updateMvMatrix(); 
+
+	myEngine.mvMatrixStack.pushMatrix();
+
+		myEngine.mvMatrixStack.addTranslation({0.0f, 1.0f, -17.5f});
+		myEngine.mvMatrixStack.addRotation(M_PI / 2, {0.f, 1.f, 0.f});
+		myEngine.mvMatrixStack.addHomothety({1.f, 1.f, 20.f});
+
+		myEngine.updateMvMatrix();
+		myEngine.setFlatColor(101.0f/255.0f, 140.0f/255.0f, 136.0f/255.0f);
+		cube->draw();
+
+	myEngine.mvMatrixStack.popMatrix();
+	myEngine.updateMvMatrix(); 
 }
 
 void drawBatimentGare(){
@@ -108,7 +192,7 @@ void axes(){
 
 void drawScene() {
 	axes();
-	drawBatimentGare();
+	drawFenetre();
 }
 
 
