@@ -97,7 +97,7 @@ void axes(){
 
 void drawScene() {
 	axes();
-	drawFenetre();
+	drawGare();
 }
 
 
