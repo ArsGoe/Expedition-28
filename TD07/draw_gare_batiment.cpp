@@ -4,6 +4,7 @@
 
 IndexedMesh* cube = nullptr;
 IndexedMesh* sphere = nullptr;
+float temps = 0.0f;
 
 void drawFenetre(){
 	//Cylindre
@@ -65,19 +66,118 @@ void drawFenetre(){
 
 void drawBatimentGare(){
 	myEngine.mvMatrixStack.pushMatrix();
-
 		myEngine.mvMatrixStack.addHomothety({20.f, 15.f, 10.f});
 
 		myEngine.updateMvMatrix();
 		myEngine.setFlatColor(124.0f/255.0f, 136.0f/255.0f, 132.0f/255.0f);
 		cube->draw();
+	myEngine.mvMatrixStack.popMatrix();
 
+	//Cylindre
+	myEngine.mvMatrixStack.pushMatrix();
+		myEngine.mvMatrixStack.addTranslation({0.f, -7.5f, 5.f});
+		myEngine.mvMatrixStack.addHomothety({3.f, 15.f, 3.f});
+
+		myEngine.updateMvMatrix();
+		myEngine.setFlatColor(124.0f/255.0f, 136.0f/255.0f, 132.0f/255.0f);
+		drawCylindreFerme();
 	myEngine.mvMatrixStack.popMatrix();
 }
 
+void drawPorte(){
+	//Cylindre
+	myEngine.mvMatrixStack.pushMatrix();
+		myEngine.mvMatrixStack.addHomothety({10.f, 1.f, 10.f});
+
+		myEngine.updateMvMatrix();
+		myEngine.setFlatColor(68.0f/255.0f, 62.0f/255.0f, 57.0f/255.0f);
+		drawCylindreFerme();
+	myEngine.mvMatrixStack.popMatrix();
+
+	//Rectangle
+	myEngine.mvMatrixStack.pushMatrix();
+		myEngine.mvMatrixStack.addTranslation({0.f, 0.5f, -13.f});
+		myEngine.mvMatrixStack.addHomothety({20.f, 1.f, 25.f});
+
+		myEngine.updateMvMatrix();
+		myEngine.setFlatColor(68.0f/255.0f, 62.0f/255.0f, 57.0f/255.0f);
+		cube->draw();
+	myEngine.mvMatrixStack.popMatrix();
+
+	//Cadre verticale
+	myEngine.mvMatrixStack.pushMatrix();
+		myEngine.mvMatrixStack.addTranslation({0.0f, 1.0f, -7.5f});
+		myEngine.mvMatrixStack.addHomothety({1.f, 1.f, 34.f});
+
+		myEngine.updateMvMatrix();
+		myEngine.setFlatColor(34.0f/255.0f, 38.0f/255.0f, 37.0f/255.0f);
+		cube->draw();
+	myEngine.mvMatrixStack.popMatrix();
+
+	//Poignet
+	myEngine.mvMatrixStack.pushMatrix();
+		myEngine.mvMatrixStack.addTranslation({5.0f, 1.0f, -10.5f});
+		myEngine.mvMatrixStack.addHomothety({1.f, 0.5f, 1.f});
+
+		myEngine.updateMvMatrix();
+		myEngine.setFlatColor(4.0f/255.0f, 38.0f/255.0f, 37.0f/255.0f);
+		drawCylindreFerme();
+	myEngine.mvMatrixStack.popMatrix();
+
+	myEngine.mvMatrixStack.pushMatrix();
+		myEngine.mvMatrixStack.addTranslation({-5.0f, 1.0f, -10.5f});
+		myEngine.mvMatrixStack.addHomothety({1.f, 0.5f, 1.f});
+
+		myEngine.updateMvMatrix();
+		myEngine.setFlatColor(4.0f/255.0f, 38.0f/255.0f, 37.0f/255.0f);
+		drawCylindreFerme();
+	myEngine.mvMatrixStack.popMatrix();
+}
+
+void drawHorloge(){
+	temps += 1;
+	float angle = temps * (2.0f * -M_PI / 120.0f);
+	float angle2 = temps * (2.0f * -M_PI / 1440.0f);
+	
+	//Cylindre
+	myEngine.mvMatrixStack.pushMatrix();
+		myEngine.mvMatrixStack.addHomothety({10.f, 1.f, 10.f});
+
+		myEngine.updateMvMatrix();
+		myEngine.setFlatColor(178.0f/255.0f, 193.0f/255.0f, 187.0f/255.0f);
+		drawCylindreFerme();
+	myEngine.mvMatrixStack.popMatrix();
+
+	// Grande Aiguille
+	myEngine.mvMatrixStack.pushMatrix();
+		myEngine.mvMatrixStack.addTranslation({0.0f, 1.0f, 0.0f});
+		myEngine.mvMatrixStack.addRotation(angle, {0.f, 1.f, 0.f});
+		myEngine.mvMatrixStack.addTranslation({0.0f, 0.0f, 4.5f});
+		myEngine.mvMatrixStack.addHomothety({0.5f, 0.5f, 9.f});
+
+		myEngine.updateMvMatrix();
+		myEngine.setFlatColor(34.0f/255.0f, 38.0f/255.0f, 37.0f/255.0f);
+		cube->draw();
+	myEngine.mvMatrixStack.popMatrix();
+
+	// Petite Aiguille
+	myEngine.mvMatrixStack.pushMatrix();
+		myEngine.mvMatrixStack.addTranslation({0.0f, 1.0f, 0.0f});
+		myEngine.mvMatrixStack.addRotation(angle2, {0.f, 1.f, 0.f});
+		myEngine.mvMatrixStack.addTranslation({0.0f, 0.0f, 3.5f});
+		myEngine.mvMatrixStack.addHomothety({0.5f, 0.5f, 7.f});
+
+		myEngine.updateMvMatrix();
+		myEngine.setFlatColor(34.0f/255.0f, 38.0f/255.0f, 37.0f/255.0f);
+		cube->draw();
+	myEngine.mvMatrixStack.popMatrix();
+}
+
+
+
 void drawGare(){
 	myEngine.mvMatrixStack.pushMatrix();
-		drawBatimentGare();
+		//drawBatimentGare();
 	myEngine.mvMatrixStack.popMatrix();
 
 	//Fenêtre
@@ -120,8 +220,27 @@ void drawGare(){
 			myEngine.mvMatrixStack.addTranslation(positions[i]);
 			myEngine.mvMatrixStack.addRotation(rotation[i], {0.f, 0.f, 1.f});
 			myEngine.mvMatrixStack.addHomothety({0.10f, 0.10f, 0.10f});
-			drawFenetre();
+
+			myEngine.updateMvMatrix();
+			//drawFenetre();
 		myEngine.mvMatrixStack.popMatrix();
-		myEngine.updateMvMatrix();
 	}
+
+	//Porte
+	myEngine.mvMatrixStack.pushMatrix();
+			myEngine.mvMatrixStack.addTranslation({0.0f, 7.3f, 0.8f });
+			myEngine.mvMatrixStack.addHomothety({0.20f, 0.40f, 0.22f});
+
+			myEngine.updateMvMatrix();
+			//drawPorte();
+	myEngine.mvMatrixStack.popMatrix();
+
+	myEngine.mvMatrixStack.pushMatrix();
+			myEngine.mvMatrixStack.addTranslation({0.0f, 7.5f, 5.5f });
+			myEngine.mvMatrixStack.addHomothety({0.20f, 0.20f, 0.20f});
+
+			myEngine.updateMvMatrix();
+			//drawHorloge();
+	myEngine.mvMatrixStack.popMatrix();
+
 }
