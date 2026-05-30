@@ -173,15 +173,63 @@ void drawHorloge(){
 	myEngine.mvMatrixStack.popMatrix();
 }
 
+void drawBarriere(){
+	std::vector<Vector3D> positions = {
+		//Face
+		{ 4.f, 0.f, 0.f },
+		{ 2.f, 0.f, 0.f },
+		{ 0.f, 0.f, 0.f },
+		{ -2.f, 0.f, 0.f },
+		{ -4.f, 0.f, 0.f },
+	};
 
+	for (size_t i = 0; i < positions.size(); ++i){
+		myEngine.mvMatrixStack.pushMatrix();
+			myEngine.mvMatrixStack.addTranslation(positions[i]);
+			myEngine.mvMatrixStack.addHomothety({0.5f, 0.5f, 5.f});
+
+			myEngine.updateMvMatrix();
+			myEngine.setFlatColor(178.0f/255.0f, 193.0f/255.0f, 187.0f/255.0f);
+			cube->draw();
+		myEngine.mvMatrixStack.popMatrix();
+	}
+
+	myEngine.mvMatrixStack.pushMatrix();
+		myEngine.mvMatrixStack.addTranslation({-6.f, 0.f, 1.f});
+		myEngine.mvMatrixStack.addHomothety({0.5f, 0.5f, 7.f});
+
+		myEngine.updateMvMatrix();
+		myEngine.setFlatColor(178.0f/255.0f, 193.0f/255.0f, 187.0f/255.0f);
+		cube->draw();
+	myEngine.mvMatrixStack.popMatrix();
+
+	myEngine.mvMatrixStack.pushMatrix();
+		myEngine.mvMatrixStack.addTranslation({6.f, 0.f, 1.f});
+		myEngine.mvMatrixStack.addHomothety({0.5f, 0.5f, 7.f});
+
+		myEngine.updateMvMatrix();
+		myEngine.setFlatColor(178.0f/255.0f, 193.0f/255.0f, 187.0f/255.0f);
+		cube->draw();
+	myEngine.mvMatrixStack.popMatrix();
+
+	myEngine.mvMatrixStack.pushMatrix();
+		myEngine.mvMatrixStack.addTranslation({0., 0., 2.5f});
+		myEngine.mvMatrixStack.addRotation(M_PI/2, {0.f, 1.f, 0.f});
+		myEngine.mvMatrixStack.addHomothety({0.5f, 0.5f, 12.f});
+
+		myEngine.updateMvMatrix();
+		myEngine.setFlatColor(178.0f/255.0f, 193.0f/255.0f, 187.0f/255.0f);
+		cube->draw();
+	myEngine.mvMatrixStack.popMatrix();
+}
 
 void drawGare(){
 	myEngine.mvMatrixStack.pushMatrix();
-		//drawBatimentGare();
+		drawBatimentGare();
 	myEngine.mvMatrixStack.popMatrix();
 
 	//Fenêtre
-	std::vector<Vector3D> positions = {
+	std::vector<Vector3D> positionsFenetre = {
 		//Face
 		{ 7.0f, 7.5f, 2.0f },
 		{ 4.0f, 7.5f, 2.0f },
@@ -208,21 +256,21 @@ void drawGare(){
 		{  7.0f, -7.5f, 2.0f }
 	};
 
-	std::vector<float> rotation = {
+	std::vector<float> rotationFenetre = {
 		0.0f, 0.0f, 0.0f, 0.0f, //Face
 		M_PI/2, M_PI/2, M_PI/2, M_PI/2, M_PI/2, //Droite
 		-M_PI/2, -M_PI/2, -M_PI/2, -M_PI/2, -M_PI/2, //Gauche
 		M_PI, M_PI, M_PI, M_PI, M_PI, M_PI //Dos
 	};
 
-	for (size_t i = 0; i < positions.size(); ++i){
+	for (size_t i = 0; i < positionsFenetre.size(); ++i){
 		myEngine.mvMatrixStack.pushMatrix();
-			myEngine.mvMatrixStack.addTranslation(positions[i]);
-			myEngine.mvMatrixStack.addRotation(rotation[i], {0.f, 0.f, 1.f});
+			myEngine.mvMatrixStack.addTranslation(positionsFenetre[i]);
+			myEngine.mvMatrixStack.addRotation(rotationFenetre[i], {0.f, 0.f, 1.f});
 			myEngine.mvMatrixStack.addHomothety({0.10f, 0.10f, 0.10f});
 
 			myEngine.updateMvMatrix();
-			//drawFenetre();
+			drawFenetre();
 		myEngine.mvMatrixStack.popMatrix();
 	}
 
@@ -232,7 +280,7 @@ void drawGare(){
 			myEngine.mvMatrixStack.addHomothety({0.20f, 0.40f, 0.22f});
 
 			myEngine.updateMvMatrix();
-			//drawPorte();
+			drawPorte();
 	myEngine.mvMatrixStack.popMatrix();
 
 	myEngine.mvMatrixStack.pushMatrix();
@@ -240,7 +288,55 @@ void drawGare(){
 			myEngine.mvMatrixStack.addHomothety({0.20f, 0.20f, 0.20f});
 
 			myEngine.updateMvMatrix();
-			//drawHorloge();
+			drawHorloge();
 	myEngine.mvMatrixStack.popMatrix();
+
+	//Barrière
+	std::vector<Vector3D> positionsBarriere = {
+		//Face
+		{ -8.5f, 7.5f, 5.2f },
+		{ -5.5f, 7.5f, 5.2f },
+		{  5.5f, 7.5f, 5.2f },
+		{  8.5f, 7.5f, 5.2f },
+		//Droite
+		{ -10.0f,  5.65f, 5.2f },
+		{ -10.0f,  1.9f, 5.2f },
+		{ -10.0f, -1.9f, 5.2f },
+		{ -10.0f, -5.65f, 5.2f },
+		//Gauche
+		{ 10.0f,  5.65f, 5.2f },
+		{ 10.0f,  1.9f, 5.2f },
+		{ 10.0f, -1.9f, 5.2f },
+		{ 10.0f, -5.65f, 5.2f },
+		//Dos
+		{ -8.5f, -7.5f, 5.2f },
+		{ -5.5f, -7.5f, 5.2f },
+		{  5.5f, -7.5f, 5.2f },
+		{  8.5f, -7.5f, 5.2f },
+	};
+
+	std::vector<float> rotationBarriere = {
+		0.0f, 0.0f, 0.0f, 0.0f, //Face
+		M_PI/2, M_PI/2, M_PI/2, M_PI/2, //Droite
+		-M_PI/2, -M_PI/2, -M_PI/2, -M_PI/2, //Gauche
+		M_PI, M_PI, M_PI, M_PI //Dos
+	};
+
+	for (size_t i = 0; i < positionsBarriere.size(); ++i){
+		myEngine.mvMatrixStack.pushMatrix();
+			myEngine.mvMatrixStack.addTranslation(positionsBarriere[i]);
+			myEngine.mvMatrixStack.addRotation(rotationBarriere[i], {0.f, 0.f, 1.f});
+
+			if (i < 4 || i > 11){
+				myEngine.mvMatrixStack.addHomothety({0.25f, 0.5f, 0.10f});
+			}
+			else {
+				myEngine.mvMatrixStack.addHomothety({0.32f, 0.29f, 0.10f});
+			}
+
+			myEngine.updateMvMatrix();
+			drawBarriere();
+		myEngine.mvMatrixStack.popMatrix();
+	}
 
 }
