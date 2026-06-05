@@ -1,5 +1,6 @@
 #include "draw_scene.hpp"
 #include "tools/basic_mesh.hpp"
+#include "tools/gl_tools.hpp"
 #include "tools/vector3d.hpp"
 
 /// Camera parameters
@@ -11,15 +12,33 @@ GLBI_Engine myEngine;
 
 IndexedMesh* cylinder;
 GLBI_Convex_2D_Shape cercle{3};
+
+/***************************************** Variables des Rails *****************************************/
+float rr = 0.5;
+float sx = (2 - rr) / 2;
+float sr = 0.5;
+
+/***************************************** Premier Rail Courbe *****************************************/
+GLBI_Convex_2D_Shape quart_de_cercle_debout1{3};
+GLBI_Convex_2D_Shape quart_de_cercle_debout2{3};
+GLBI_Convex_2D_Shape quart_de_cercle_allonge1{3};
+GLBI_Convex_2D_Shape quart_de_cercle_allonge2{3};
+
+/***************************************** Second Rail Courbe *****************************************/
+GLBI_Convex_2D_Shape quart_de_cercle_debout3{3};
+GLBI_Convex_2D_Shape quart_de_cercle_debout4{3};
+GLBI_Convex_2D_Shape quart_de_cercle_allonge3{3};
+GLBI_Convex_2D_Shape quart_de_cercle_allonge4{3};
+
 GLBI_Convex_2D_Shape sides{3};
 GLBI_Convex_2D_Shape sides_mais{3};
+
+/***************************************** Axe XYZ *****************************************/
 GLBI_Set_Of_Points x{3};
 GLBI_Set_Of_Points y{3};
 GLBI_Set_Of_Points z{3};
 
-float rr = 0.5;
-float sx = (2 - rr) / 2;
-float sr = 0.5;
+
 
 
 /***************************************** Déclaration formes gare *****************************************/
@@ -67,27 +86,144 @@ void initCylinder(){
 	cercle.changeNature(GL_TRIANGLE_FAN);
 }
 
-void initRailCourbe(){
+void initFirstBentRail(float x, float size){
 	int nbPointDuCercle { 100 };
-	int rayon { 1 };
-	std::vector<float> initCercle {};
+	float rayon { size };
+	std::vector<float> initCercleDebout1 {};
 	for(int i { 0 }; i < nbPointDuCercle; i++) {
-		float angle = 2 * M_PI * i / nbPointDuCercle;
-		initCercle.push_back(sin(angle) * rayon);
-		initCercle.push_back(0.0f);
-		initCercle.push_back(cos(angle) * rayon);
+		float angle =  M_PI / 2  * i / nbPointDuCercle;
+		initCercleDebout1.push_back(sin(angle) * rayon);
+		initCercleDebout1.push_back(cos(angle) * rayon);
+		initCercleDebout1.push_back(0.0f);
+
+		initCercleDebout1.push_back(sin(angle) * rayon);
+		initCercleDebout1.push_back(cos(angle) * rayon);
+		initCercleDebout1.push_back(x);
 	}
 
-	cercle.initShape(initCercle);
-	cercle.changeNature(GL_TRIANGLE_FAN);
+	quart_de_cercle_debout1.initShape(initCercleDebout1);
+	quart_de_cercle_debout1.changeNature(GL_TRIANGLE_STRIP);
+
+	float rayon2 { size  + x};
+	std::vector<float> initCercleDebout2 {};
+	for(int i { 0 }; i < nbPointDuCercle; i++) {
+		float angle =  M_PI / 2  * i / nbPointDuCercle;
+		initCercleDebout2.push_back(sin(angle) * rayon2);
+		initCercleDebout2.push_back(cos(angle) * rayon2);
+		initCercleDebout2.push_back(0.0f);
+
+		initCercleDebout2.push_back(sin(angle) * rayon2);
+		initCercleDebout2.push_back(cos(angle) * rayon2);
+		initCercleDebout2.push_back(x);
+	}
+
+	quart_de_cercle_debout2.initShape(initCercleDebout2);
+	quart_de_cercle_debout2.changeNature(GL_TRIANGLE_STRIP);
+
+	std::vector<float> initCercleAllonge1 {};
+	for(int i { 0 }; i < nbPointDuCercle; i++) {
+		float angle =  M_PI / 2  * i / nbPointDuCercle;
+		initCercleAllonge1.push_back(sin(angle) * rayon);
+		initCercleAllonge1.push_back(cos(angle) * rayon);
+		initCercleAllonge1.push_back(0.0f);
+
+		initCercleAllonge1.push_back(sin(angle) * (rayon2));
+		initCercleAllonge1.push_back(cos(angle) * (rayon2));
+		initCercleAllonge1.push_back(0.0f);
+	}
+
+	quart_de_cercle_allonge1.initShape(initCercleAllonge1);
+	quart_de_cercle_allonge1.changeNature(GL_TRIANGLE_STRIP);
+
+	std::vector<float> initCercleAllonge2 {};
+	for(int i { 0 }; i < nbPointDuCercle; i++) {
+		float angle =  M_PI / 2  * i / nbPointDuCercle;
+		initCercleAllonge2.push_back(sin(angle) * rayon);
+		initCercleAllonge2.push_back(cos(angle) * rayon);
+		initCercleAllonge2.push_back(x);
+
+		initCercleAllonge2.push_back(sin(angle) * (rayon2));
+		initCercleAllonge2.push_back(cos(angle) * (rayon2));
+		initCercleAllonge2.push_back(x);
+	}
+
+	quart_de_cercle_allonge2.initShape(initCercleAllonge2);
+	quart_de_cercle_allonge2.changeNature(GL_TRIANGLE_STRIP);
+}
+
+void initSecondBentRail(float x, float size){
+	int nbPointDuCercle { 100 };
+	float rayon { size };
+	std::vector<float> initCercleDebout3 {};
+	for(int i { 0 }; i < nbPointDuCercle; i++) {
+		float angle =  M_PI / 2  * i / nbPointDuCercle;
+		initCercleDebout3.push_back(sin(angle) * rayon);
+		initCercleDebout3.push_back(cos(angle) * rayon);
+		initCercleDebout3.push_back(0.0f);
+
+		initCercleDebout3.push_back(sin(angle) * rayon);
+		initCercleDebout3.push_back(cos(angle) * rayon);
+		initCercleDebout3.push_back(x);
+	}
+
+	quart_de_cercle_debout3.initShape(initCercleDebout3);
+	quart_de_cercle_debout3.changeNature(GL_TRIANGLE_STRIP);
+
+	float rayon2 { size  + x};
+	std::vector<float> initCercleDebout4 {};
+	for(int i { 0 }; i < nbPointDuCercle; i++) {
+		float angle =  M_PI / 2  * i / nbPointDuCercle;
+		initCercleDebout4.push_back(sin(angle) * rayon2);
+		initCercleDebout4.push_back(cos(angle) * rayon2);
+		initCercleDebout4.push_back(0.0f);
+
+		initCercleDebout4.push_back(sin(angle) * rayon2);
+		initCercleDebout4.push_back(cos(angle) * rayon2);
+		initCercleDebout4.push_back(x);
+	}
+
+	quart_de_cercle_debout4.initShape(initCercleDebout4);
+	quart_de_cercle_debout4.changeNature(GL_TRIANGLE_STRIP);
+
+	std::vector<float> initCercleAllonge3 {};
+	for(int i { 0 }; i < nbPointDuCercle; i++) {
+		float angle =  M_PI / 2  * i / nbPointDuCercle;
+		initCercleAllonge3.push_back(sin(angle) * rayon);
+		initCercleAllonge3.push_back(cos(angle) * rayon);
+		initCercleAllonge3.push_back(0.0f);
+
+		initCercleAllonge3.push_back(sin(angle) * (rayon2));
+		initCercleAllonge3.push_back(cos(angle) * (rayon2));
+		initCercleAllonge3.push_back(0.0f);
+	}
+
+	quart_de_cercle_allonge3.initShape(initCercleAllonge3);
+	quart_de_cercle_allonge3.changeNature(GL_TRIANGLE_STRIP);
+
+	std::vector<float> initCercleAllonge4 {};
+	for(int i { 0 }; i < nbPointDuCercle; i++) {
+		float angle =  M_PI / 2  * i / nbPointDuCercle;
+		initCercleAllonge4.push_back(sin(angle) * rayon);
+		initCercleAllonge4.push_back(cos(angle) * rayon);
+		initCercleAllonge4.push_back(x);
+
+		initCercleAllonge4.push_back(sin(angle) * (rayon2));
+		initCercleAllonge4.push_back(cos(angle) * (rayon2));
+		initCercleAllonge4.push_back(x);
+	}
+
+	quart_de_cercle_allonge4.initShape(initCercleAllonge4);
+	quart_de_cercle_allonge4.changeNature(GL_TRIANGLE_STRIP);
 }
 
 void initScene() {
 	initAxes();
 	initCylinder();
-
 	cube = basicCube();
 	cube->createVAO();
+
+	initFirstBentRail(sr, 3);
+	initSecondBentRail(sr, 7);
 }
 
 void drawCylindreFerme() {
@@ -188,10 +324,19 @@ void drawRailDroit(){
 	
 }
 
-void drawRailCourbe(){
-
+void drawFirstBentRail(){
+	quart_de_cercle_allonge1.drawShape();
+	quart_de_cercle_allonge2.drawShape();
+	quart_de_cercle_debout1.drawShape();
+	quart_de_cercle_debout2.drawShape();
 }
 
+void drawSecondBentRail(){
+	quart_de_cercle_allonge3.drawShape();
+	quart_de_cercle_allonge4.drawShape();
+	quart_de_cercle_debout3.drawShape();
+	quart_de_cercle_debout4.drawShape();
+}
 
 
 void axes(){
@@ -204,8 +349,8 @@ void axes(){
 
 void drawScene() {
 	axes();
-	drawRailDroit();
-	
+	drawFirstBentRail();
+	drawSecondBentRail();
 }
 
 
