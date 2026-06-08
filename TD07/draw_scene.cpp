@@ -1,5 +1,9 @@
 #include "draw_scene.hpp"
 #include "draw_gare_batiment.hpp"
+#include "draw_train.hpp"
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "tools/stb_image.h"
 
 /// Camera parameters
 float angle_theta {45.0};      // Angle between x axis and viewpoint
@@ -69,6 +73,7 @@ void initScene() {
 	initAxes();
 	initCylinder();
 	initCube();
+	initSphere();
 }
 
 void drawCylindreFerme() {
@@ -86,7 +91,6 @@ void drawCylindreFerme() {
 		cercle.drawShape();
 
 	myEngine.mvMatrixStack.popMatrix();
-	myEngine.updateMvMatrix();
 }
 
 void axes(){
@@ -98,6 +102,15 @@ void axes(){
 void drawScene() {
 	axes();
 	drawGare();
+
+	myEngine.mvMatrixStack.pushMatrix();
+		myEngine.mvMatrixStack.addTranslation({ 0.0f, 15.f, 0.0f });
+		myEngine.mvMatrixStack.addHomothety({ 0.3f, 0.3f, 0.3f });
+		myEngine.updateMvMatrix();
+
+		drawTrain();
+
+	myEngine.mvMatrixStack.popMatrix();
 }
 
 

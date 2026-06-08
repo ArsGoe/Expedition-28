@@ -3,8 +3,12 @@
 #include <vector>
 
 IndexedMesh* cube = nullptr;
-IndexedMesh* sphere = nullptr;
 float temps = 0.0f;
+/******************************** Texture *********************************/
+
+struct GLBI_Texture murGare_texture;
+
+/******************************** 3D *********************************/
 
 void drawFenetre(){
 	//Cylindre
