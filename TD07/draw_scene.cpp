@@ -1,9 +1,7 @@
 #include "draw_scene.hpp"
 #include "draw_gare_batiment.hpp"
 #include "draw_train.hpp"
-
-#define STB_IMAGE_IMPLEMENTATION
-#include "tools/stb_image.h"
+#include "texture.hpp"
 
 /// Camera parameters
 float angle_theta {45.0};      // Angle between x axis and viewpoint
@@ -70,6 +68,8 @@ void initCube(){
 }
 
 void initScene() {
+	glActiveTexture(GL_TEXTURE0);
+	initTexturesGare();
 	initAxes();
 	initCylinder();
 	initCube();

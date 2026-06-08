@@ -18,6 +18,7 @@ namespace glbasimac {
 		shape.setNbElt(nb_pts);
 		coord_pts = std::move(in_coord);
 		shape.addOneBuffer(0,dimension,coord_pts.data(),"Coordinates",false);
+		//shape.addOneBuffer(2,2,uv,"uvs",true);
 
 		if(!shape.createVAO()) {
 			std::cerr<<"Unable to create VAO for Set of Points"<<std::endl;

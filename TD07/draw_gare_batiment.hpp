@@ -13,3 +13,4 @@ extern GLBI_Engine myEngine;
 void drawFenetre();
 void drawBatimentGare();
 void drawGare();
+void initTexturesGare();

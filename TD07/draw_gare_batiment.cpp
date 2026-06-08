@@ -1,13 +1,36 @@
 #include "draw_scene.hpp"
 #include "draw_gare_batiment.hpp"
 #include <vector>
+#include "texture.hpp"
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "tools/stb_image.h"
 
 IndexedMesh* cube = nullptr;
 float temps = 0.0f;
 /******************************** Texture *********************************/
 
-struct GLBI_Texture murGare_texture;
+GLBI_Texture murGare_texture;
 
+void initTexturesGare()
+{
+    murGare_texture.createTexture();
+	murGare_texture.attachTexture();
+	murGare_texture.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	std::string murGare_image = "../TD07/assets/texture/murGare_Image.png";
+	int x, y, n;
+	unsigned char *imageMurGare = stbi_load(murGare_image.c_str(), &x, &y, &n, 0);
+	if (imageMurGare == nullptr) {
+		std::cout << "Image pas trouvé" << std::endl;
+	}
+	else {
+		murGare_texture.loadImage(x, y, n, imageMurGare);
+		stbi_image_free(imageMurGare);
+	}
+
+	murGare_texture.detachTexture();
+}
 /******************************** 3D *********************************/
 
 void drawFenetre(){
@@ -73,8 +96,12 @@ void drawBatimentGare(){
 		myEngine.mvMatrixStack.addHomothety({20.f, 15.f, 10.f});
 
 		myEngine.updateMvMatrix();
-		myEngine.setFlatColor(124.0f/255.0f, 136.0f/255.0f, 132.0f/255.0f);
-		cube->draw();
+		//myEngine.setFlatColor(124.0f/255.0f, 136.0f/255.0f, 132.0f/255.0f);
+		myEngine.activateTexturing(true);
+			murGare_texture.attachTexture();
+				cube->draw();
+			murGare_texture.detachTexture();
+		myEngine.activateTexturing(false);
 	myEngine.mvMatrixStack.popMatrix();
 
 	//Cylindre
@@ -83,8 +110,11 @@ void drawBatimentGare(){
 		myEngine.mvMatrixStack.addHomothety({3.f, 15.f, 3.f});
 
 		myEngine.updateMvMatrix();
-		myEngine.setFlatColor(124.0f/255.0f, 136.0f/255.0f, 132.0f/255.0f);
-		drawCylindreFerme();
+		myEngine.activateTexturing(true);
+			murGare_texture.attachTexture();
+				drawCylindreFerme();
+			murGare_texture.detachTexture();
+		myEngine.activateTexturing(false);
 	myEngine.mvMatrixStack.popMatrix();
 }
 
