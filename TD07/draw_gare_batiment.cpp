@@ -1,7 +1,7 @@
 #include "draw_scene.hpp"
 #include "draw_gare_batiment.hpp"
 #include <vector>
-#include "texture.hpp"
+#include "glbasimac/glbi_texture.hpp"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "tools/stb_image.h"
@@ -11,6 +11,9 @@ float temps = 0.0f;
 /******************************** Texture *********************************/
 
 GLBI_Texture murGare_texture;
+GLBI_Texture fenetreGare_texture;
+GLBI_Texture porteGare_texture;
+GLBI_Texture horlogeGare_texture;
 
 void initTexturesGare()
 {
@@ -30,18 +33,74 @@ void initTexturesGare()
 	}
 
 	murGare_texture.detachTexture();
+
+	//Fenêtre
+	fenetreGare_texture.createTexture();
+	fenetreGare_texture.attachTexture();
+	fenetreGare_texture.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	std::string fenetreGare_image = "../TD07/assets/texture/FenetreGare_Image.png";
+	unsigned char *fenetreGare = stbi_load(fenetreGare_image.c_str(), &x, &y, &n, 0);
+	if (fenetreGare == nullptr) {
+		std::cout << "Image pas trouvé" << std::endl;
+	}
+	else {
+		fenetreGare_texture.loadImage(x, y, n, fenetreGare);
+		stbi_image_free(fenetreGare);
+	}
+
+	fenetreGare_texture.detachTexture();
+
+	//Porte
+	porteGare_texture.createTexture();
+	porteGare_texture.attachTexture();
+	porteGare_texture.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	std::string porteGare_image = "../TD07/assets/texture/PorteGare_Image.png";
+	unsigned char *porteGare = stbi_load(porteGare_image.c_str(), &x, &y, &n, 0);
+	if (porteGare == nullptr) {
+		std::cout << "Image pas trouvé" << std::endl;
+	}
+	else {
+		porteGare_texture.loadImage(x, y, n, porteGare);
+		stbi_image_free(porteGare);
+	}
+
+	porteGare_texture.detachTexture();
+
+	//Horloge
+	horlogeGare_texture.createTexture();
+	horlogeGare_texture.attachTexture();
+	horlogeGare_texture.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	std::string horlogeGare_image = "../TD07/assets/texture/HorlogeGare_Image.png";
+	unsigned char *horlogeGare = stbi_load(horlogeGare_image.c_str(), &x, &y, &n, 0);
+	if (horlogeGare == nullptr) {
+		std::cout << "Image pas trouvé" << std::endl;
+	}
+	else {
+		horlogeGare_texture.loadImage(x, y, n, horlogeGare);
+		stbi_image_free(horlogeGare);
+	}
+
+	horlogeGare_texture.detachTexture();
 }
-/******************************** 3D *********************************/
+
+/***************************************************************** 3D ********************************************************************************/
 
 void drawFenetre(){
 	//Cylindre
 	myEngine.mvMatrixStack.pushMatrix();
 
-		myEngine.mvMatrixStack.addHomothety({10.f, 1.f, 10.f});
+		myEngine.mvMatrixStack.addHomothety({10.f, 0.99f, 10.f});
 
 		myEngine.updateMvMatrix();
-		myEngine.setFlatColor(168.0f/255.0f, 217.0f/255.0f, 217.0f/255.0f);
-		drawCylindreFerme();
+		//myEngine.setFlatColor(168.0f/255.0f, 217.0f/255.0f, 217.0f/255.0f);
+		myEngine.activateTexturing(true);
+			fenetreGare_texture.attachTexture();
+				drawCylindreFerme();
+			fenetreGare_texture.detachTexture();
+		myEngine.activateTexturing(false);
 
 	myEngine.mvMatrixStack.popMatrix();
 
@@ -52,9 +111,11 @@ void drawFenetre(){
 		myEngine.mvMatrixStack.addHomothety({20.f, 1.f, 25.f});
 
 		myEngine.updateMvMatrix();
-		myEngine.setFlatColor(168.0f/255.0f, 217.0f/255.0f, 217.0f/255.0f);
-		cube->draw();
-
+		myEngine.activateTexturing(true);
+			fenetreGare_texture.attachTexture();
+				cube->draw();
+			fenetreGare_texture.detachTexture();
+		myEngine.activateTexturing(false);
 	myEngine.mvMatrixStack.popMatrix();
 
 	//Cadre verticale
@@ -121,11 +182,16 @@ void drawBatimentGare(){
 void drawPorte(){
 	//Cylindre
 	myEngine.mvMatrixStack.pushMatrix();
-		myEngine.mvMatrixStack.addHomothety({10.f, 1.f, 10.f});
+		myEngine.mvMatrixStack.addHomothety({10.f, 1.0f, 10.f});
+		myEngine.mvMatrixStack.addRotation(M_PI/2,{0.0f, 1.0f,0.0f});
 
 		myEngine.updateMvMatrix();
-		myEngine.setFlatColor(68.0f/255.0f, 62.0f/255.0f, 57.0f/255.0f);
-		drawCylindreFerme();
+		//myEngine.setFlatColor(68.0f/255.0f, 62.0f/255.0f, 57.0f/255.0f);
+		myEngine.activateTexturing(true);
+			porteGare_texture.attachTexture();
+				drawCylindreFerme();
+			porteGare_texture.detachTexture();
+		myEngine.activateTexturing(false);
 	myEngine.mvMatrixStack.popMatrix();
 
 	//Rectangle
@@ -134,8 +200,12 @@ void drawPorte(){
 		myEngine.mvMatrixStack.addHomothety({20.f, 1.f, 25.f});
 
 		myEngine.updateMvMatrix();
-		myEngine.setFlatColor(68.0f/255.0f, 62.0f/255.0f, 57.0f/255.0f);
-		cube->draw();
+		//myEngine.setFlatColor(68.0f/255.0f, 62.0f/255.0f, 57.0f/255.0f);
+		myEngine.activateTexturing(true);
+			porteGare_texture.attachTexture();
+				cube->draw();
+			porteGare_texture.detachTexture();
+		myEngine.activateTexturing(false);
 	myEngine.mvMatrixStack.popMatrix();
 
 	//Cadre verticale
@@ -176,10 +246,15 @@ void drawHorloge(){
 	//Cylindre
 	myEngine.mvMatrixStack.pushMatrix();
 		myEngine.mvMatrixStack.addHomothety({10.f, 1.f, 10.f});
+		myEngine.mvMatrixStack.addRotation(M_PI/2, {0.0f, 1.0f, 0.0f});
 
 		myEngine.updateMvMatrix();
-		myEngine.setFlatColor(178.0f/255.0f, 193.0f/255.0f, 187.0f/255.0f);
-		drawCylindreFerme();
+		//myEngine.setFlatColor(178.0f/255.0f, 193.0f/255.0f, 187.0f/255.0f);
+		myEngine.activateTexturing(true);
+			horlogeGare_texture.attachTexture();
+				drawCylindreFerme();
+			horlogeGare_texture.detachTexture();
+		myEngine.activateTexturing(false);
 	myEngine.mvMatrixStack.popMatrix();
 
 	// Grande Aiguille

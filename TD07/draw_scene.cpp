@@ -51,14 +51,17 @@ void initCylinder(){
 	int nbPointDuCercle { 100 };
 	int rayon { 1 };
 	std::vector<float> initCercle {};
+	std::vector<float> cercleUVS {};
 	for(int i { 0 }; i < nbPointDuCercle; i++) {
 		float angle = 2 * M_PI * i / nbPointDuCercle;
 		initCercle.push_back(sin(angle) * rayon);
 		initCercle.push_back(0.0f);
 		initCercle.push_back(cos(angle) * rayon);
+		cercleUVS.push_back(0.5*cos(angle)+0.5);
+		cercleUVS.push_back(0.5*sin(angle)+0.5);
 	}
 
-	cercle.initShape(initCercle);
+	cercle.initShape(initCercle, cercleUVS);
 	cercle.changeNature(GL_TRIANGLE_FAN);
 }
 
