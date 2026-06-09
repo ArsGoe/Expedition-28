@@ -9,6 +9,7 @@ float tailleNuage = 0.5f;
 float tempsNuage = 0;
 float tailleNuage2 = 0.5f;
 float tempsNuage2 = 2;
+float tempsAvantTrain = 0;
 
 /********************************************** 3D ********************************************************/
 void initSphere(){
@@ -218,6 +219,10 @@ void drawNuage(){
 void drawTrain(){
 
 	//Base
+
+	tempsAvantTrain += 0.01f;
+	float angle = temps * (2.0f * -M_PI / 120.0f);
+
     myEngine.mvMatrixStack.pushMatrix();
 		myEngine.mvMatrixStack.addHomothety({5.f, 15.f, 5.f});
 
@@ -232,11 +237,16 @@ void drawTrain(){
 
 	myEngine.mvMatrixStack.pushMatrix();
 	    myEngine.mvMatrixStack.addTranslation({0.f, 15.0f, 0.0f});
+		myEngine.mvMatrixStack.addRotation(angle,{0.0f, 1.0f,0.0f}),
 		myEngine.mvMatrixStack.addHomothety({3.f, 0.5f, 3.f});
 
 		myEngine.updateMvMatrix();
 		myEngine.setFlatColor(227.0f/255.0f, 195.0f/255.0f, 181.0f/255.0f);
-		drawCylindreFerme();
+		myEngine.activateTexturing(true);
+			horlogeGare_texture.attachTexture();
+				drawCylindreFerme();
+			horlogeGare_texture.detachTexture();
+		myEngine.activateTexturing(false);
 	myEngine.mvMatrixStack.popMatrix();
 
     myEngine.mvMatrixStack.pushMatrix();

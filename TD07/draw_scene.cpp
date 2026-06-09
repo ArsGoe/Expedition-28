@@ -105,15 +105,14 @@ void axes(){
 
 void drawScene() {
 	axes();
-	//drawGare();
-	drawTrain();
+	drawGare();
 
 	myEngine.mvMatrixStack.pushMatrix();
 		myEngine.mvMatrixStack.addTranslation({ 0.0f, 15.f, 0.0f });
 		myEngine.mvMatrixStack.addHomothety({ 0.3f, 0.3f, 0.3f });
 		myEngine.updateMvMatrix();
 
-		//drawTrain();
+		drawTrain();
 
 	myEngine.mvMatrixStack.popMatrix();
 }
