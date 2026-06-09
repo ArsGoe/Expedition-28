@@ -1,5 +1,6 @@
 #include "draw_scene.hpp"
 #include "draw_train.hpp"
+#include "texture.hpp"
 #include <vector>
 
 IndexedMesh* sphere = nullptr;
@@ -9,6 +10,7 @@ float tempsNuage = 0;
 float tailleNuage2 = 0.5f;
 float tempsNuage2 = 2;
 
+/********************************************** 3D ********************************************************/
 void initSphere(){
 	sphere = basicSphere();
 	sphere->createVAO();
@@ -20,7 +22,11 @@ void drawFenetreTrain(){
 
 		myEngine.updateMvMatrix();
 		myEngine.setFlatColor(168.0f/255.0f, 217.0f/255.0f, 217.0f/255.0f);
-		cube->draw();
+		myEngine.activateTexturing(true);
+			fenetreTrain_texture.attachTexture();
+				cube->draw();
+			fenetreTrain_texture.detachTexture();
+		myEngine.activateTexturing(false);
 	myEngine.mvMatrixStack.popMatrix();
 
     myEngine.mvMatrixStack.pushMatrix();
@@ -50,8 +56,12 @@ void drawCabine(){
 		myEngine.mvMatrixStack.addHomothety({10.f, 10.f, 15.f});
 
 		myEngine.updateMvMatrix();
-		myEngine.setFlatColor(178.0f/255.0f, 193.0f/255.0f, 187.0f/255.0f);
-		cube->draw();
+		//myEngine.setFlatColor(178.0f/255.0f, 193.0f/255.0f, 187.0f/255.0f);
+		myEngine.activateTexturing(true);
+			baseTrain_texture.attachTexture();
+				cube->draw();
+			baseTrain_texture.detachTexture();
+		myEngine.activateTexturing(false);
 	myEngine.mvMatrixStack.popMatrix();
 
     //Fenêtres
@@ -154,8 +164,12 @@ void drawBarre(){
 		myEngine.mvMatrixStack.addHomothety({0.5f, 10.0f, 1.0f});
 
 		myEngine.updateMvMatrix();
-		myEngine.setFlatColor(68.0f/255.0f, 62.0f/255.0f, 57.0f/255.0f);
-		cube->draw();
+		//myEngine.setFlatColor(68.0f/255.0f, 62.0f/255.0f, 57.0f/255.0f);
+		myEngine.activateTexturing(true);
+			porteGare_texture.attachTexture();
+				cube->draw();
+			porteGare_texture.detachTexture();
+		myEngine.activateTexturing(false);
 	myEngine.mvMatrixStack.popMatrix();
 
 	myEngine.mvMatrixStack.pushMatrix();
@@ -164,8 +178,12 @@ void drawBarre(){
 		myEngine.mvMatrixStack.addHomothety({0.5f, 10.0f, 1.0f});
 
 		myEngine.updateMvMatrix();
-		myEngine.setFlatColor(68.0f/255.0f, 62.0f/255.0f, 57.0f/255.0f);
-		cube->draw();
+		//myEngine.setFlatColor(68.0f/255.0f, 62.0f/255.0f, 57.0f/255.0f);
+		myEngine.activateTexturing(true);
+			porteGare_texture.attachTexture();
+				cube->draw();
+			porteGare_texture.detachTexture();
+		myEngine.activateTexturing(false);
 	myEngine.mvMatrixStack.popMatrix();
 }
 
@@ -204,8 +222,12 @@ void drawTrain(){
 		myEngine.mvMatrixStack.addHomothety({5.f, 15.f, 5.f});
 
 		myEngine.updateMvMatrix();
-		myEngine.setFlatColor(178.0f/255.0f, 193.0f/255.0f, 187.0f/255.0f);
-		drawCylindreFerme();
+		//myEngine.setFlatColor(178.0f/255.0f, 193.0f/255.0f, 187.0f/255.0f);
+		myEngine.activateTexturing(true);
+			baseTrain_texture.attachTexture();
+				drawCylindreFerme();
+			baseTrain_texture.detachTexture();
+		myEngine.activateTexturing(false);
 	myEngine.mvMatrixStack.popMatrix();
 
 	myEngine.mvMatrixStack.pushMatrix();
@@ -222,14 +244,18 @@ void drawTrain(){
 		myEngine.mvMatrixStack.addHomothety({10.f, 20.f, 3.f});
 
 		myEngine.updateMvMatrix();
-		myEngine.setFlatColor(178.0f/255.0f, 193.0f/255.0f, 187.0f/255.0f);
-		cube->draw();
+		//myEngine.setFlatColor(178.0f/255.0f, 193.0f/255.0f, 187.0f/255.0f);
+		myEngine.activateTexturing(true);
+			baseTrain_texture.attachTexture();
+				cube->draw();
+			baseTrain_texture.detachTexture();
+		myEngine.activateTexturing(false);
 	myEngine.mvMatrixStack.popMatrix();
 
 	//Cabine
     myEngine.mvMatrixStack.pushMatrix();
     	myEngine.updateMvMatrix();
-        drawCabine();
+		drawCabine();
     myEngine.mvMatrixStack.popMatrix();
 
     myEngine.mvMatrixStack.pushMatrix();
@@ -292,8 +318,12 @@ void drawTrain(){
 		myEngine.mvMatrixStack.addHomothety({9.8f, 3.0f, 2.f});
 
 		myEngine.updateMvMatrix();
-		myEngine.setFlatColor(163.0f/255.0f, 131.0f/255.0f, 122.0f/255.0f);
-		cube->draw();
+		//myEngine.setFlatColor(163.0f/255.0f, 131.0f/255.0f, 122.0f/255.0f);
+		myEngine.activateTexturing(true);
+			porteGare_texture.attachTexture();
+				cube->draw();
+			porteGare_texture.detachTexture();
+		myEngine.activateTexturing(false);
 	myEngine.mvMatrixStack.popMatrix();
 
 		//Nuage
@@ -320,7 +350,11 @@ void drawTrain(){
 		myEngine.mvMatrixStack.addHomothety({tailleNuage, tailleNuage, tailleNuage});
 
         myEngine.updateMvMatrix();
-         drawNuage();
+		myEngine.activateTexturing(true);
+			nuageTrain_texture.attachTexture();
+				drawNuage();
+			nuageTrain_texture.detachTexture();
+		myEngine.activateTexturing(false);
     myEngine.mvMatrixStack.popMatrix();
 
 	myEngine.mvMatrixStack.pushMatrix();
@@ -329,7 +363,11 @@ void drawTrain(){
 		myEngine.mvMatrixStack.addHomothety({tailleNuage2, tailleNuage2, tailleNuage2});
 
         myEngine.updateMvMatrix();
-         drawNuage();
+		myEngine.activateTexturing(true);
+			nuageTrain_texture.attachTexture();
+				drawNuage();
+			nuageTrain_texture.detachTexture();
+		myEngine.activateTexturing(false);
     myEngine.mvMatrixStack.popMatrix();
 
 }

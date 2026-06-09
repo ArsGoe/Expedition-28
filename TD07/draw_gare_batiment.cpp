@@ -1,90 +1,11 @@
 #include "draw_scene.hpp"
 #include "draw_gare_batiment.hpp"
-#include <vector>
-#include "glbasimac/glbi_texture.hpp"
+#include "texture.hpp"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "tools/stb_image.h"
+#include <vector>
 
 IndexedMesh* cube = nullptr;
 float temps = 0.0f;
-/******************************** Texture *********************************/
-
-GLBI_Texture murGare_texture;
-GLBI_Texture fenetreGare_texture;
-GLBI_Texture porteGare_texture;
-GLBI_Texture horlogeGare_texture;
-
-void initTexturesGare()
-{
-    murGare_texture.createTexture();
-	murGare_texture.attachTexture();
-	murGare_texture.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-	std::string murGare_image = "../TD07/assets/texture/murGare_Image.png";
-	int x, y, n;
-	unsigned char *imageMurGare = stbi_load(murGare_image.c_str(), &x, &y, &n, 0);
-	if (imageMurGare == nullptr) {
-		std::cout << "Image pas trouvé" << std::endl;
-	}
-	else {
-		murGare_texture.loadImage(x, y, n, imageMurGare);
-		stbi_image_free(imageMurGare);
-	}
-
-	murGare_texture.detachTexture();
-
-	//Fenêtre
-	fenetreGare_texture.createTexture();
-	fenetreGare_texture.attachTexture();
-	fenetreGare_texture.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-	std::string fenetreGare_image = "../TD07/assets/texture/FenetreGare_Image.png";
-	unsigned char *fenetreGare = stbi_load(fenetreGare_image.c_str(), &x, &y, &n, 0);
-	if (fenetreGare == nullptr) {
-		std::cout << "Image pas trouvé" << std::endl;
-	}
-	else {
-		fenetreGare_texture.loadImage(x, y, n, fenetreGare);
-		stbi_image_free(fenetreGare);
-	}
-
-	fenetreGare_texture.detachTexture();
-
-	//Porte
-	porteGare_texture.createTexture();
-	porteGare_texture.attachTexture();
-	porteGare_texture.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-	std::string porteGare_image = "../TD07/assets/texture/PorteGare_Image.png";
-	unsigned char *porteGare = stbi_load(porteGare_image.c_str(), &x, &y, &n, 0);
-	if (porteGare == nullptr) {
-		std::cout << "Image pas trouvé" << std::endl;
-	}
-	else {
-		porteGare_texture.loadImage(x, y, n, porteGare);
-		stbi_image_free(porteGare);
-	}
-
-	porteGare_texture.detachTexture();
-
-	//Horloge
-	horlogeGare_texture.createTexture();
-	horlogeGare_texture.attachTexture();
-	horlogeGare_texture.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-	std::string horlogeGare_image = "../TD07/assets/texture/HorlogeGare_Image.png";
-	unsigned char *horlogeGare = stbi_load(horlogeGare_image.c_str(), &x, &y, &n, 0);
-	if (horlogeGare == nullptr) {
-		std::cout << "Image pas trouvé" << std::endl;
-	}
-	else {
-		horlogeGare_texture.loadImage(x, y, n, horlogeGare);
-		stbi_image_free(horlogeGare);
-	}
-
-	horlogeGare_texture.detachTexture();
-}
 
 /***************************************************************** 3D ********************************************************************************/
 

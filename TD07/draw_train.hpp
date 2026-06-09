@@ -14,3 +14,4 @@ extern float temps;
 
 void drawTrain();
 void initSphere();
+void initTexturesTrain();

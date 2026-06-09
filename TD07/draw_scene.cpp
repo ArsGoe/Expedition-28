@@ -73,6 +73,7 @@ void initCube(){
 void initScene() {
 	glActiveTexture(GL_TEXTURE0);
 	initTexturesGare();
+	initTexturesTrain();
 	initAxes();
 	initCylinder();
 	initCube();
@@ -104,14 +105,15 @@ void axes(){
 
 void drawScene() {
 	axes();
-	drawGare();
+	//drawGare();
+	drawTrain();
 
 	myEngine.mvMatrixStack.pushMatrix();
 		myEngine.mvMatrixStack.addTranslation({ 0.0f, 15.f, 0.0f });
 		myEngine.mvMatrixStack.addHomothety({ 0.3f, 0.3f, 0.3f });
 		myEngine.updateMvMatrix();
 
-		drawTrain();
+		//drawTrain();
 
 	myEngine.mvMatrixStack.popMatrix();
 }
