@@ -48,12 +48,16 @@ void drawMur() {
 	myEngine.mvMatrixStack.pushMatrix();
 		myEngine.mvMatrixStack.addTranslation({0,  50, 50});
 		myEngine.mvMatrixStack.addRotation(-M_PI/2, {0.0f, 1.0f, 0.0f});
+		myEngine.mvMatrixStack.addRotation(M_PI, {0.0f, 0.0f, 1.0f});
+
 		myEngine.mvMatrixStack.addHomothety({100, 2, 100});
 
 		myEngine.updateMvMatrix();
 
 			myEngine.activateTexturing(true);
 				mur1_texture.attachTexture();
+
+					// myEngine.setFlatColor(0.f,1.f,0.f);
 					cube->draw();
 				mur1_texture.detachTexture();
 			myEngine.activateTexturing(false);

@@ -235,9 +235,9 @@ namespace STP3D {
 		};
 		float normals[3*24] = {
 			// Face front (z = width/2) (A,B,C,D)
-			0.0f,1.0f,0.0f,		0.0f,1.0f,0.0f,		0.0f,1.0f,0.0f,		0.0f,1.0f,0.0f,
+			0.0f, 0.0f,1.0f,	0.0f, 0.0f,1.0f,	0.0f, 0.0f,1.0f,	0.0f,0.0f,1.0f,
 			// Face back (z = -width/2) (E,H,G,F)
-			0.0f,1.0f,0.0f,		0.0f,1.0f,0.0f,		0.0f,1.0f,0.0f,		0.0f,1.0f,0.0f,
+            0.0f,0.0f,-1.0f,        0.0f,0.0f,-1.0f,  0.0f,0.0f,-1.0f,        0.0f,0.0f,-1.0f,
 			// Face left (x = -width/2) (E,A,D,H)
 			-1.0,0.0,0.0,		-1.0,0.0,0.0,		-1.0,0.0,0.0,		-1.0,0.0,0.0,
 			// Face right (x = +width/2) (B,F,G,C)

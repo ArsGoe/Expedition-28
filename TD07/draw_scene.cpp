@@ -3,6 +3,7 @@
 #include "draw_train.hpp"
 #include "texture.hpp"
 #include "sol.hpp"
+#include "light.hpp"
 
 /// Camera parameters
 float angle_theta {45.0};      // Angle between x axis and viewpoint
@@ -81,6 +82,7 @@ void initScene() {
 	initCylinder();
 	initCube();
 	initSphere();
+	activeLight();
 }
 
 void drawCylindreFerme() {
@@ -107,26 +109,28 @@ void axes(){
 }
 
 void drawScene() {
-	axes();
-	drawSol();
-	drawMur();
-	myEngine.mvMatrixStack.pushMatrix();
-		myEngine.mvMatrixStack.addTranslation({ 5.0f, 5.0f, 2.5f });
-		myEngine.mvMatrixStack.addHomothety({ 0.4f, 0.4f, 0.6f });
-		myEngine.updateMvMatrix();
+	//axes();
+	myEngine.switchToPhongShading();
+		drawSol();
+		drawMur();
+		myEngine.mvMatrixStack.pushMatrix();
+			myEngine.mvMatrixStack.addTranslation({ 5.0f, 5.0f, 2.5f });
+			myEngine.mvMatrixStack.addHomothety({ 0.4f, 0.4f, 0.6f });
+			myEngine.updateMvMatrix();
 
-		drawGare();
+			drawGare();
 
-	myEngine.mvMatrixStack.popMatrix();
+		myEngine.mvMatrixStack.popMatrix();
 
-	myEngine.mvMatrixStack.pushMatrix();
-		myEngine.mvMatrixStack.addTranslation({ 0.0f, 15.f, 3.f });
-		myEngine.mvMatrixStack.addHomothety({ 0.3f, 0.3f, 0.3f });
-		myEngine.updateMvMatrix();
+		myEngine.mvMatrixStack.pushMatrix();
+			myEngine.mvMatrixStack.addTranslation({ 0.0f, 15.f, 3.f });
+			myEngine.mvMatrixStack.addHomothety({ 0.3f, 0.3f, 0.3f });
+			myEngine.updateMvMatrix();
 
-		drawTrain();
+			drawTrain();
 
-	myEngine.mvMatrixStack.popMatrix();
+		myEngine.mvMatrixStack.popMatrix();
+	myEngine.switchToFlatShading();
 }
 
 
