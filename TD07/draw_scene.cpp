@@ -2,6 +2,7 @@
 #include "draw_gare_batiment.hpp"
 #include "draw_train.hpp"
 #include "texture.hpp"
+#include "sol.hpp"
 
 /// Camera parameters
 float angle_theta {45.0};      // Angle between x axis and viewpoint
@@ -74,6 +75,7 @@ void initScene() {
 	glActiveTexture(GL_TEXTURE0);
 	initTexturesGare();
 	initTexturesTrain();
+	initTexturesSol();
 	initAxes();
 	initCylinder();
 	initCube();
@@ -105,10 +107,18 @@ void axes(){
 
 void drawScene() {
 	axes();
-	drawGare();
+	drawSol();
+	myEngine.mvMatrixStack.pushMatrix();
+		myEngine.mvMatrixStack.addTranslation({ 5.0f, 5.0f, 2.5f });
+		myEngine.mvMatrixStack.addHomothety({ 0.4f, 0.4f, 0.6f });
+		myEngine.updateMvMatrix();
+
+		drawGare();
+
+	myEngine.mvMatrixStack.popMatrix();
 
 	myEngine.mvMatrixStack.pushMatrix();
-		myEngine.mvMatrixStack.addTranslation({ 0.0f, 15.f, 0.0f });
+		myEngine.mvMatrixStack.addTranslation({ 0.0f, 15.f, 3.f });
 		myEngine.mvMatrixStack.addHomothety({ 0.3f, 0.3f, 0.3f });
 		myEngine.updateMvMatrix();
 

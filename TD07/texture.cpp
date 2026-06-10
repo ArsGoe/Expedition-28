@@ -4,6 +4,29 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "tools/stb_image.h"
 
+/********************************************** Herbe ********************************************************/
+
+GLBI_Texture herbeSol_texture;
+
+void initTexturesSol(){
+    herbeSol_texture.createTexture();
+	herbeSol_texture.attachTexture();
+	herbeSol_texture.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	std::string herbeSol_image = "../TD07/assets/texture/herbeSol_Image.png";
+	int x, y, n;
+	unsigned char *imageHerbeSol = stbi_load(herbeSol_image.c_str(), &x, &y, &n, 0);
+	if (imageHerbeSol == nullptr) {
+		std::cout << "Image pas trouvé" << std::endl;
+	}
+	else {
+		baseTrain_texture.loadImage(x, y, n, imageHerbeSol);
+		stbi_image_free(imageHerbeSol);
+	}
+
+	herbeSol_texture.detachTexture();
+}
+
 /********************************************** Train ********************************************************/
 
 GLBI_Texture baseTrain_texture;
