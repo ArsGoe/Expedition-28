@@ -27,6 +27,103 @@ void initTexturesSol(){
 	herbeSol_texture.detachTexture();
 }
 
+/********************************************** Sol ********************************************************/
+
+GLBI_Texture mur1_texture;
+GLBI_Texture mur2_texture;
+GLBI_Texture mur3_texture;
+GLBI_Texture mur4_texture;
+GLBI_Texture ciel_texture;
+
+void initTexturesMur(){
+	stbi_set_flip_vertically_on_load(true);
+
+    mur1_texture.createTexture();
+	mur1_texture.attachTexture();
+	mur1_texture.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	std::string mur1_image = "../TD07/assets/texture/mur_Image1.png";
+	int x, y, n;
+	unsigned char *imageMur1 = stbi_load(mur1_image.c_str(), &x, &y, &n, 0);
+	if (imageMur1 == nullptr) {
+		std::cout << "Image pas trouvé" << std::endl;
+	}
+	else {
+		baseTrain_texture.loadImage(x, y, n, imageMur1);
+		stbi_image_free(imageMur1);
+	}
+
+	mur1_texture.detachTexture();
+
+	//Mur 2
+	mur2_texture.createTexture();
+	mur2_texture.attachTexture();
+	mur2_texture.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	std::string mur2_image = "../TD07/assets/texture/mur_Image2.png";
+	unsigned char *imageMur2 = stbi_load(mur2_image.c_str(), &x, &y, &n, 0);
+	if (imageMur2 == nullptr) {
+		std::cout << "Image pas trouvé" << std::endl;
+	}
+	else {
+		baseTrain_texture.loadImage(x, y, n, imageMur2);
+		stbi_image_free(imageMur2);
+	}
+
+	mur2_texture.detachTexture();
+
+	//Mur 3
+	mur3_texture.createTexture();
+	mur3_texture.attachTexture();
+	mur3_texture.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	std::string mur3_image = "../TD07/assets/texture/mur_Image3.png";
+	unsigned char *imageMur3 = stbi_load(mur3_image.c_str(), &x, &y, &n, 0);
+	if (imageMur3 == nullptr) {
+		std::cout << "Image pas trouvé" << std::endl;
+	}
+	else {
+		baseTrain_texture.loadImage(x, y, n, imageMur3);
+		stbi_image_free(imageMur3);
+	}
+
+	mur3_texture.detachTexture();
+
+	//Mur 4
+	mur4_texture.createTexture();
+	mur4_texture.attachTexture();
+	mur4_texture.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	std::string mur4_image = "../TD07/assets/texture/mur_Image4.png";
+	unsigned char *imageMur4 = stbi_load(mur4_image.c_str(), &x, &y, &n, 0);
+	if (imageMur4 == nullptr) {
+		std::cout << "Image pas trouvé" << std::endl;
+	}
+	else {
+		baseTrain_texture.loadImage(x, y, n, imageMur4);
+		stbi_image_free(imageMur4);
+	}
+
+	mur4_texture.detachTexture();
+
+	//Ciel
+	ciel_texture.createTexture();
+	ciel_texture.attachTexture();
+	ciel_texture.setParameters(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	std::string ciel_image = "../TD07/assets/texture/Ciel_Image.png";
+	unsigned char *imageciel = stbi_load(ciel_image.c_str(), &x, &y, &n, 0);
+	if (imageciel == nullptr) {
+		std::cout << "Image pas trouvé" << std::endl;
+	}
+	else {
+		baseTrain_texture.loadImage(x, y, n, imageciel);
+		stbi_image_free(imageciel);
+	}
+
+	ciel_texture.detachTexture();
+}
+
 /********************************************** Train ********************************************************/
 
 GLBI_Texture baseTrain_texture;

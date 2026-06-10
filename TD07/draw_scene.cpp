@@ -76,6 +76,7 @@ void initScene() {
 	initTexturesGare();
 	initTexturesTrain();
 	initTexturesSol();
+	initTexturesMur();
 	initAxes();
 	initCylinder();
 	initCube();
@@ -108,6 +109,7 @@ void axes(){
 void drawScene() {
 	axes();
 	drawSol();
+	drawMur();
 	myEngine.mvMatrixStack.pushMatrix();
 		myEngine.mvMatrixStack.addTranslation({ 5.0f, 5.0f, 2.5f });
 		myEngine.mvMatrixStack.addHomothety({ 0.4f, 0.4f, 0.6f });
