@@ -1,4 +1,9 @@
 #include "draw_scene.hpp"
+#include "draw_gare_batiment.hpp"
+#include "draw_train.hpp"
+#include "texture.hpp"
+#include "sol.hpp"
+#include "light.hpp"
 #include "tools/basic_mesh.hpp"
 #include "tools/gl_tools.hpp"
 #include "tools/vector3d.hpp"
@@ -22,23 +27,27 @@ GLBI_Set_Of_Points x{3};
 GLBI_Set_Of_Points y{3};
 GLBI_Set_Of_Points z{3};
 
-void initAxes()
-{
-	std::vector<float> points_x{0.0, 0.0, 0.0,
+/***************************************** Déclaration formes gare *****************************************/
+
+void initAxes(){
+	//X EN ROUGE
+	std::vector<float> points_x {0.0, 0.0, 0.0,
 								10.0, 0.0, 0.0};
 	std::vector<float> points_color_x{1.0, 0.0, 0.0,
 									  1.0, 0.0, 0.0};
 	x.initSet(points_x, points_color_x);
 	x.changeNature(GL_LINES);
 
-	std::vector<float> points_y{0.0, 0.0, 0.0,
+	//Y EN VERT
+	std::vector<float> points_y {0.0, 0.0, 0.0,
 								0.0, 10.0, 0.0};
 	std::vector<float> points_color_y{0.0, 1.0, 0.0,
 									  0.0, 1.0, 0.0};
 	y.initSet(points_y, points_color_y);
 	y.changeNature(GL_LINES);
 
-	std::vector<float> points_z{0.0, 0.0, 0.0,
+	//Z EN BLEU
+	std::vector<float> points_z {0.0, 0.0, 0.0,
 								0.0, 0.0, 10.0};
 	std::vector<float> points_color_z{0.0, 0.0, 1.0,
 									  0.0, 0.0, 1.0};
@@ -51,18 +60,20 @@ void initCylinder()
 	cylinder = basicCylinder(1.0, 1.0);
 	cylinder->createVAO();
 
-	int nbPointDuCercle{100};
-	int rayon{1};
-	std::vector<float> initCercle{};
-	for (int i{0}; i < nbPointDuCercle; i++)
-	{
+	int nbPointDuCercle { 100 };
+	int rayon { 1 };
+	std::vector<float> initCercle {};
+	std::vector<float> cercleUVS {};
+	for(int i { 0 }; i < nbPointDuCercle; i++) {
 		float angle = 2 * M_PI * i / nbPointDuCercle;
 		initCercle.push_back(sin(angle) * rayon);
 		initCercle.push_back(0.0f);
 		initCercle.push_back(cos(angle) * rayon);
+		cercleUVS.push_back(0.5*cos(angle)+0.5);
+		cercleUVS.push_back(0.5*sin(angle)+0.5);
 	}
 
-	cercle.initShape(initCercle);
+	cercle.initShape(initCercle, cercleUVS);
 	cercle.changeNature(GL_TRIANGLE_FAN);
 }
 
@@ -71,10 +82,17 @@ void initCube(){
 	cube->createVAO();
 }
 
-void initScene()
-{
+void initScene() {
+	glActiveTexture(GL_TEXTURE0);
+	initTexturesGare();
+	initTexturesTrain();
+	initTexturesSol();
+	initTexturesMur();
 	initAxes();
 	initCylinder();
+	initCube();
+	initSphere();
+	activeLight();
 	initCube();
 	initFirstBentRail(sr, 3);
 	initSecondBentRail(sr, 7);
@@ -84,6 +102,7 @@ void drawCylindreFerme()
 {
 
 	cercle.drawShape();
+	//myEngine.setFlatColor(1.0, 1.0, 1.0);
 	cylinder->draw();
 
 	myEngine.mvMatrixStack.pushMatrix();
@@ -91,23 +110,41 @@ void drawCylindreFerme()
 	myEngine.mvMatrixStack.addTranslation({0.0f, 1.f, 0.0f}); // Correction de la taille
 	myEngine.updateMvMatrix();
 
-	cercle.drawShape();
+		//myEngine.setFlatColor(1.0, 0.0, 0.0); // Conversion des couleurs en [0, 1]
+		cercle.drawShape();
 
 	myEngine.mvMatrixStack.popMatrix();
-	myEngine.updateMvMatrix();
 }
 
-
-void axes()
-{
+void axes(){
 	x.drawSet();
 	y.drawSet();
 	z.drawSet();
 }
 
-void drawScene()
-{
-	axes();
+void drawScene() {
+	//axes();
+	myEngine.switchToPhongShading();
+		drawSol();
+		drawMur();
+		myEngine.mvMatrixStack.pushMatrix();
+			myEngine.mvMatrixStack.addTranslation({ 5.0f, 5.0f, 2.5f });
+			myEngine.mvMatrixStack.addHomothety({ 0.4f, 0.4f, 0.6f });
+			myEngine.updateMvMatrix();
+
+			drawGare();
+
+		myEngine.mvMatrixStack.popMatrix();
+
+		myEngine.mvMatrixStack.pushMatrix();
+			myEngine.mvMatrixStack.addTranslation({ 0.0f, 15.f, 3.f });
+			myEngine.mvMatrixStack.addHomothety({ 0.3f, 0.3f, 0.3f });
+			myEngine.updateMvMatrix();
+
+			drawTrain();
+
+		myEngine.mvMatrixStack.popMatrix();
+	myEngine.switchToFlatShading();
 	drawRailDroit();
 	myEngine.mvMatrixStack.pushMatrix();
 		myEngine.mvMatrixStack.addTranslation({0.0, 10.0, 0.0});
@@ -115,5 +152,5 @@ void drawScene()
 			drawBentRail();
 	myEngine.mvMatrixStack.popMatrix();
 	myEngine.updateMvMatrix();
-	
+
 }

@@ -3,7 +3,7 @@
 
 namespace glbasimac {
 
-	void GLBI_Convex_2D_Shape::initShape(std::vector<float> in_coord) {
+	void GLBI_Convex_2D_Shape::initShape(std::vector<float> in_coord, std::vector<float> uvs) {
 		coord_pts.clear();
 		if (dimension == 2) {
 			assert(in_coord.size()%2 == 0);
@@ -17,7 +17,20 @@ namespace glbasimac {
 
 		shape.setNbElt(nb_pts);
 		coord_pts = std::move(in_coord);
+
+		std::vector<float> normals(nb_pts * 3, 0.0f);
+
+		//Modifs lights
+		for (int i = 0; i < nb_pts; i++) {
+			normals[3*i + 1] = 1.0f; // normale vers +Z
+		}
+		//Fin modifs light
+
 		shape.addOneBuffer(0,dimension,coord_pts.data(),"Coordinates",false);
+		shape.addOneBuffer(2,2,uvs.data(),"uvs",true);
+		//Modifs lights
+		shape.addOneBuffer(1, 3, normals.data(), "normals", false);
+		//Fin modifs light
 
 		if(!shape.createVAO()) {
 			std::cerr<<"Unable to create VAO for Set of Points"<<std::endl;

@@ -2,6 +2,7 @@
 #include "GLFW/glfw3.h"
 #include "glad/glad.h"
 #include "draw_scene.hpp"
+#include "camera.hpp"
 #include "tools/shaders.hpp"
 #include <iostream>
 
@@ -14,7 +15,7 @@ IndexedMesh* rectangle;
 /* Window properties */
 static const unsigned int WINDOW_WIDTH = 1200;
 static const unsigned int WINDOW_HEIGHT = 800;
-static const char WINDOW_TITLE[] = "TD04 Ex01";
+static const char WINDOW_TITLE[] = "Gare";
 static float aspectRatio = 1.0f;
 
 /* Minimal time wanted between two images */
@@ -39,7 +40,6 @@ void onKey(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods
 {
 	int is_pressed = (action == GLFW_PRESS); 
 	switch(key) {
-		case GLFW_KEY_A :
 		case GLFW_KEY_ESCAPE :
 			glfwSetWindowShouldClose(window, GLFW_TRUE);
 			break;
@@ -48,20 +48,6 @@ void onKey(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods
 			break;
 		case GLFW_KEY_P:
 			if (is_pressed) glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
-
-		// TO DO EX01 part 3
-		case GLFW_KEY_UP :
-			angle_phy += 1.0;
-			break;
-
-		case GLFW_KEY_DOWN :
-			angle_phy -= 1.0;
-			break;
-		case GLFW_KEY_LEFT :
-			angle_theta += 1.0;
-			break;
-		case GLFW_KEY_RIGHT :
-			angle_theta -= 1.0;
 			break;
 
 		case GLFW_KEY_R :
@@ -125,6 +111,9 @@ int main(int /*argc*/, char** /*argv*/)
 	glfwSetWindowSizeCallback(window,onWindowResized);
 	glfwSetKeyCallback(window, onKey);
 	glfwSetMouseButtonCallback(window, onMouseButton);
+	glfwSetCursorPosCallback(window, mouse_callback);
+	//Pour qu'on puisse faire un 360°
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	std::cout<<"Engine init"<<std::endl;
 	// TO DO EX01 part 2
@@ -144,11 +133,18 @@ int main(int /*argc*/, char** /*argv*/)
 		double startTime = glfwGetTime();
 
 		/* Render begins here */
-		glClearColor(0.f,0.0f,0.2f,0.0f);
+		glClearColor(1.0f,1.0f,1.0f,0.0f);
 
 		// TO DO EX01 part 2
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_DEPTH_TEST);
+
+		/* Caméra FPS*/
+
+		MaCameraFPS(window);
+
+		/* Caméra FPS*/
+
 		drawScene();
 
 		// TO DO EX01 part 3
@@ -163,7 +159,6 @@ int main(int /*argc*/, char** /*argv*/)
 		Matrix4D viewMatrix = Matrix4D::lookAt(pos_camera,viewed_point,up_vector);
 		myEngine.setViewMatrix(viewMatrix);
 		myEngine.updateMvMatrix();
-
 		
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
