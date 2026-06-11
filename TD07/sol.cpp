@@ -47,7 +47,7 @@ void drawSol() {
 void drawMur() {
 	myEngine.mvMatrixStack.pushMatrix();
 		myEngine.mvMatrixStack.addTranslation({0,  50, 50});
-		myEngine.mvMatrixStack.addRotation(-M_PI/2, {0.0f, 1.0f, 0.0f});
+		//myEngine.mvMatrixStack.addRotation(-M_PI/2, {0.0f, 1.0f, 0.0f});
 		myEngine.mvMatrixStack.addRotation(M_PI, {0.0f, 0.0f, 1.0f});
 
 		myEngine.mvMatrixStack.addHomothety({100, 2, 100});

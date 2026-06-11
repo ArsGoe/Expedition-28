@@ -21,7 +21,7 @@ static float aspectRatio = 1.0f;
 /* Minimal time wanted between two images */
 static const double FRAMERATE_IN_SECONDS = 1. / 30.;
 
-/* Error handling function */
+/* Error hadling function */
 void onError(int error, const char* description) {
 	std::cout << "GLFW Error ("<<error<<") : " << description << std::endl;
 }
@@ -51,15 +51,9 @@ void onKey(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods
 			break;
 
 		case GLFW_KEY_R :
-			//> EXO 3
-			//< FIN EXO 3
-			dist_zoom += 1;
+		if (is_pressed) LightToPhongShading = !LightToPhongShading;
 			break;
-		case GLFW_KEY_T :
-			//> EXO 3
-			//< FIN EXO 3
-			dist_zoom -= 1;
-			break;
+	
 		default: std::cerr<<"Touche non gérée "<<key<<std::endl;
 	}
 

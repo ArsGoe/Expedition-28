@@ -5,10 +5,11 @@
 #include "sol.hpp"
 #include "light.hpp"
 
-/// Camera parameters
-float angle_theta {45.0};      // Angle between x axis and viewpoint
-float angle_phy {30.0};      // Angle between z axis and viewpoint
-float dist_zoom {30.0};      // Distance between origin and viewpoint
+/// Caméra
+float angle_theta {45.0};
+float angle_phy {30.0};
+float dist_zoom {30.0};
+bool LightToPhongShading = false;
 
 GLBI_Engine myEngine;
 
@@ -110,7 +111,10 @@ void axes(){
 
 void drawScene() {
 	//axes();
-	myEngine.switchToPhongShading();
+	if (LightToPhongShading) {
+		myEngine.switchToPhongShading();
+	}
+
 		drawSol();
 		drawMur();
 		myEngine.mvMatrixStack.pushMatrix();
@@ -130,7 +134,10 @@ void drawScene() {
 			drawTrain();
 
 		myEngine.mvMatrixStack.popMatrix();
-	myEngine.switchToFlatShading();
+
+		if (LightToPhongShading) {
+			myEngine.switchToFlatShading();
+		}
 }
 
 
