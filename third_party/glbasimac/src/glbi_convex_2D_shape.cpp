@@ -22,7 +22,7 @@ namespace glbasimac {
 
 		//Modifs lights
 		for (int i = 0; i < nb_pts; i++) {
-			normals[3*i + 2] = 1.0f; // normale vers +Z
+			normals[3*i + 1] = 1.0f; // normale vers +Z
 		}
 		//Fin modifs light
 

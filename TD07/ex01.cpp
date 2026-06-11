@@ -50,20 +50,6 @@ void onKey(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods
 			if (is_pressed) glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 			break;
 
-		// TO DO EX01 part 3
-		/*case GLFW_KEY_UP :
-			angle_phy += 1.0;
-			break;
-		case GLFW_KEY_DOWN :
-			angle_phy -= 1.0;
-			break;
-		case GLFW_KEY_LEFT :
-			angle_theta += 1.0;
-			break;
-		case GLFW_KEY_RIGHT :
-			angle_theta -= 1.0;
-			break;*/
-
 		case GLFW_KEY_R :
 			//> EXO 3
 			//< FIN EXO 3
@@ -125,6 +111,9 @@ int main(int /*argc*/, char** /*argv*/)
 	glfwSetWindowSizeCallback(window,onWindowResized);
 	glfwSetKeyCallback(window, onKey);
 	glfwSetMouseButtonCallback(window, onMouseButton);
+	glfwSetCursorPosCallback(window, mouse_callback);
+	//Pour qu'on puisse faire un 360°
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	std::cout<<"Engine init"<<std::endl;
 	// TO DO EX01 part 2
