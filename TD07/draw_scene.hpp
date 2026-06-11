@@ -29,3 +29,11 @@ void drawPan();
 
 void drawScene();
 
+void initCylinder();
+
+void initCube();
+
+void drawCylindreFerme();
+
+extern IndexedMesh* cube;
+extern IndexedMesh* sphere;
