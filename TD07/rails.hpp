@@ -9,7 +9,6 @@ using namespace glbasimac;    // Distance between origin and viewpoint
 
 /* OpenGL Engine */
 extern GLBI_Engine myEngine;
-IndexedMesh* cube;
 
 /***************************************** Variables des Rails *****************************************/
 extern float rr;

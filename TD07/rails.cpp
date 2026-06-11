@@ -31,6 +31,7 @@ void initFirstBentRail(float x, float size)
 	int nbPointDuCercle{100};
 	float rayon{size - rr/2};
 	std::vector<float> initCercleDebout1{};
+	std::vector<float> cercleUVS1 {};
 	for (int i{0}; i <= nbPointDuCercle; i++)
 	{
 		float angle = M_PI / 2 * i / nbPointDuCercle;
@@ -41,13 +42,17 @@ void initFirstBentRail(float x, float size)
 		initCercleDebout1.push_back(sin(angle) * rayon);
 		initCercleDebout1.push_back(cos(angle) * rayon);
 		initCercleDebout1.push_back(x);
+
+        cercleUVS1.push_back(0.5*cos(angle)+0.5);
+		cercleUVS1.push_back(0.5*sin(angle)+0.5);
 	}
 
-	quart_de_cercle_debout1.initShape(initCercleDebout1);
+	quart_de_cercle_debout1.initShape(initCercleDebout1, cercleUVS1);
 	quart_de_cercle_debout1.changeNature(GL_TRIANGLE_STRIP);
 
 	float rayon2{size + x - rr/2};
 	std::vector<float> initCercleDebout2{};
+    std::vector<float> cercleUVS2 {};
 	for (int i{0}; i <= nbPointDuCercle; i++)
 	{
 		float angle = M_PI / 2 * i / nbPointDuCercle;
@@ -58,12 +63,16 @@ void initFirstBentRail(float x, float size)
 		initCercleDebout2.push_back(sin(angle) * rayon2);
 		initCercleDebout2.push_back(cos(angle) * rayon2);
 		initCercleDebout2.push_back(x);
+
+        cercleUVS2.push_back(0.5*cos(angle)+0.5);
+		cercleUVS2.push_back(0.5*sin(angle)+0.5);
 	}
 
-	quart_de_cercle_debout2.initShape(initCercleDebout2);
+	quart_de_cercle_debout2.initShape(initCercleDebout2, cercleUVS2);
 	quart_de_cercle_debout2.changeNature(GL_TRIANGLE_STRIP);
 
 	std::vector<float> initCercleAllonge1{};
+    std::vector<float> cercleUVS3 {};
 	for (int i{0}; i <= nbPointDuCercle; i++)
 	{
 		float angle = M_PI / 2 * i / nbPointDuCercle;
@@ -74,12 +83,16 @@ void initFirstBentRail(float x, float size)
 		initCercleAllonge1.push_back(sin(angle) * (rayon2));
 		initCercleAllonge1.push_back(cos(angle) * (rayon2));
 		initCercleAllonge1.push_back(0.0f);
+
+        cercleUVS3.push_back(0.5*cos(angle)+0.5);
+		cercleUVS3.push_back(0.5*sin(angle)+0.5);
 	}
 
-	quart_de_cercle_allonge1.initShape(initCercleAllonge1);
+	quart_de_cercle_allonge1.initShape(initCercleAllonge1, cercleUVS3);
 	quart_de_cercle_allonge1.changeNature(GL_TRIANGLE_STRIP);
 
 	std::vector<float> initCercleAllonge2{};
+    std::vector<float> cercleUVS4 {};
 	for (int i{0}; i <= nbPointDuCercle; i++)
 	{
 		float angle = M_PI / 2 * i / nbPointDuCercle;
@@ -90,9 +103,12 @@ void initFirstBentRail(float x, float size)
 		initCercleAllonge2.push_back(sin(angle) * (rayon2));
 		initCercleAllonge2.push_back(cos(angle) * (rayon2));
 		initCercleAllonge2.push_back(x);
+
+        cercleUVS4.push_back(0.5*cos(angle)+0.5);
+		cercleUVS4.push_back(0.5*sin(angle)+0.5);
 	}
 
-	quart_de_cercle_allonge2.initShape(initCercleAllonge2);
+	quart_de_cercle_allonge2.initShape(initCercleAllonge2, cercleUVS4);
 	quart_de_cercle_allonge2.changeNature(GL_TRIANGLE_STRIP);
 }
 
@@ -101,6 +117,7 @@ void initSecondBentRail(float x, float size)
 	int nbPointDuCercle{100};
 	float rayon{size - rr/2};
 	std::vector<float> initCercleDebout3{};
+    std::vector<float> cercleUVS5 {};
 	for (int i{0}; i <= nbPointDuCercle; i++)
 	{
 		float angle = M_PI / 2 * i / nbPointDuCercle;
@@ -111,13 +128,17 @@ void initSecondBentRail(float x, float size)
 		initCercleDebout3.push_back(sin(angle) * rayon);
 		initCercleDebout3.push_back(cos(angle) * rayon);
 		initCercleDebout3.push_back(x);
+
+        cercleUVS5.push_back(0.5*cos(angle)+0.5);
+		cercleUVS5.push_back(0.5*sin(angle)+0.5);
 	}
 
-	quart_de_cercle_debout3.initShape(initCercleDebout3);
+	quart_de_cercle_debout3.initShape(initCercleDebout3, cercleUVS5);
 	quart_de_cercle_debout3.changeNature(GL_TRIANGLE_STRIP);
 
 	float rayon2{size + x - rr/2};
 	std::vector<float> initCercleDebout4{};
+    std::vector<float> cercleUVS6 {};
 	for (int i{0}; i <= nbPointDuCercle; i++)
 	{
 		float angle = M_PI / 2 * i / nbPointDuCercle;
@@ -128,12 +149,16 @@ void initSecondBentRail(float x, float size)
 		initCercleDebout4.push_back(sin(angle) * rayon2);
 		initCercleDebout4.push_back(cos(angle) * rayon2);
 		initCercleDebout4.push_back(x);
+
+        cercleUVS6.push_back(0.5*cos(angle)+0.5);
+		cercleUVS6.push_back(0.5*sin(angle)+0.5);
 	}
 
-	quart_de_cercle_debout4.initShape(initCercleDebout4);
+	quart_de_cercle_debout4.initShape(initCercleDebout4, cercleUVS6);
 	quart_de_cercle_debout4.changeNature(GL_TRIANGLE_STRIP);
 
 	std::vector<float> initCercleAllonge3{};
+    std::vector<float> cercleUVS7 {};
 	for (int i{0}; i <= nbPointDuCercle; i++)
 	{
 		float angle = M_PI / 2 * i / nbPointDuCercle;
@@ -144,12 +169,16 @@ void initSecondBentRail(float x, float size)
 		initCercleAllonge3.push_back(sin(angle) * (rayon2));
 		initCercleAllonge3.push_back(cos(angle) * (rayon2));
 		initCercleAllonge3.push_back(0.0f);
+
+        cercleUVS7.push_back(0.5*cos(angle)+0.5);
+		cercleUVS7.push_back(0.5*sin(angle)+0.5);
 	}
 
-	quart_de_cercle_allonge3.initShape(initCercleAllonge3);
+	quart_de_cercle_allonge3.initShape(initCercleAllonge3, cercleUVS7);
 	quart_de_cercle_allonge3.changeNature(GL_TRIANGLE_STRIP);
 
 	std::vector<float> initCercleAllonge4{};
+    std::vector<float> cercleUVS8 {};
 	for (int i{0}; i <= nbPointDuCercle; i++)
 	{
 		float angle = M_PI / 2 * i / nbPointDuCercle;
@@ -160,9 +189,12 @@ void initSecondBentRail(float x, float size)
 		initCercleAllonge4.push_back(sin(angle) * (rayon2));
 		initCercleAllonge4.push_back(cos(angle) * (rayon2));
 		initCercleAllonge4.push_back(x);
+
+        cercleUVS8.push_back(0.5*cos(angle)+0.5);
+		cercleUVS8.push_back(0.5*sin(angle)+0.5);
 	}
 
-	quart_de_cercle_allonge4.initShape(initCercleAllonge4);
+	quart_de_cercle_allonge4.initShape(initCercleAllonge4, cercleUVS8);
 	quart_de_cercle_allonge4.changeNature(GL_TRIANGLE_STRIP);
 }
 
