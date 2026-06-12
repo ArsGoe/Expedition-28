@@ -20,7 +20,7 @@ struct GLBI_Convex_2D_Shape {
 		nml_pts.clear();
 	};
 
-	void initShape(std::vector<float> in_coord, std::vector<float> uvs, bool Arriere = false);
+	void initShape(std::vector<float> in_coord, std::vector<float> uvs, bool Arriere = false, std::vector<float> custom_normals = {});
 
 	void changeNature(unsigned int new_gl_type);
 

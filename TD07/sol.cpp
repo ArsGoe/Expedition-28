@@ -1,9 +1,11 @@
 #include "draw_scene.hpp"
 #include "texture.hpp"
 
-void drawSol() {
+void drawSol(int size) {
     myEngine.mvMatrixStack.pushMatrix();
-		myEngine.mvMatrixStack.addHomothety({100.f, 100.f, 1.f});
+		//Pour que le sol soit au sol
+		myEngine.mvMatrixStack.addTranslation({0.f, 0.f, -0.5f});
+		myEngine.mvMatrixStack.addHomothety({10.f*size, 10.f*size, 1.f});
 
 		myEngine.updateMvMatrix();
 		//myEngine.setFlatColor(178.0f/255.0f, 193.0f/255.0f, 187.0f/255.0f);
@@ -13,44 +15,15 @@ void drawSol() {
 			herbeSol_texture.detachTexture();
 		myEngine.activateTexturing(false);
 	myEngine.mvMatrixStack.popMatrix();
-
-	for(int i = 0; i <= 10; i++){
-		float x = -50.0f + i * 10.0f;
-		myEngine.mvMatrixStack.pushMatrix();
-
-			myEngine.mvMatrixStack.addTranslation({x, 0.0f, 0.5f});
-			myEngine.mvMatrixStack.addHomothety({0.2f, 100.0f, 0.1f});
-
-			myEngine.updateMvMatrix();
-			myEngine.setFlatColor(0.2f, 0.2f, 0.2f);
-			cube->draw();
-
-		myEngine.mvMatrixStack.popMatrix();
-	}
-
-	for(int i = 0; i <= 10; i++){
-		float y = -50.0f + i * 10.0f;
-
-		myEngine.mvMatrixStack.pushMatrix();
-
-			myEngine.mvMatrixStack.addTranslation({0.0f, y, 0.5f});
-			myEngine.mvMatrixStack.addHomothety({100.0f, 0.2f, 0.1f});
-
-			myEngine.updateMvMatrix();
-			myEngine.setFlatColor(0.2f, 0.2f, 0.2f);
-			cube->draw();
-
-		myEngine.mvMatrixStack.popMatrix();
-	}
 }
 
-void drawMur() {
+void drawMur(int size) {
 	myEngine.mvMatrixStack.pushMatrix();
-		myEngine.mvMatrixStack.addTranslation({0,  50, 50});
+		myEngine.mvMatrixStack.addTranslation({0,  size*10.0f/2, size*10.0f/2});
 		//myEngine.mvMatrixStack.addRotation(-M_PI/2, {0.0f, 1.0f, 0.0f});
 		myEngine.mvMatrixStack.addRotation(M_PI, {0.0f, 0.0f, 1.0f});
 
-		myEngine.mvMatrixStack.addHomothety({100, 2, 100});
+		myEngine.mvMatrixStack.addHomothety({10.0f*size, 2, 10.0f*size});
 
 		myEngine.updateMvMatrix();
 
@@ -64,8 +37,8 @@ void drawMur() {
 	myEngine.mvMatrixStack.popMatrix();
 
 	myEngine.mvMatrixStack.pushMatrix();
-		myEngine.mvMatrixStack.addTranslation({0, -50, 50});
-		myEngine.mvMatrixStack.addHomothety({100, 2, 100});
+		myEngine.mvMatrixStack.addTranslation({0, -size*10.0f/2, size*10.0f/2});
+		myEngine.mvMatrixStack.addHomothety({10.0f*size, 2, 10.0f*size});
 
 		myEngine.updateMvMatrix();
 
@@ -77,9 +50,9 @@ void drawMur() {
 	myEngine.mvMatrixStack.popMatrix();
 
 	myEngine.mvMatrixStack.pushMatrix();
-		myEngine.mvMatrixStack.addTranslation({50, 0, 50});
+		myEngine.mvMatrixStack.addTranslation({size*10.0f/2, 0, size*10.0f/2});
 		myEngine.mvMatrixStack.addRotation(M_PI/2, {1.0f, 0.0f, 0.0f});
-		myEngine.mvMatrixStack.addHomothety({2, 100, 100});
+		myEngine.mvMatrixStack.addHomothety({2, 10.0f*size, 10.0f*size});
 
 		myEngine.updateMvMatrix();
 
@@ -91,9 +64,9 @@ void drawMur() {
 	myEngine.mvMatrixStack.popMatrix();
 
 	myEngine.mvMatrixStack.pushMatrix();
-		myEngine.mvMatrixStack.addTranslation({-50, 0, 50});
+		myEngine.mvMatrixStack.addTranslation({-size*10.0f/2, 0, size*10.0f/2});
 		myEngine.mvMatrixStack.addRotation(M_PI/2, {1.0f, 0.0f, 0.0f});
-		myEngine.mvMatrixStack.addHomothety({2, 100, 100});
+		myEngine.mvMatrixStack.addHomothety({2, 10.0f*size, 10.0f*size});
 
 		myEngine.updateMvMatrix();
 
@@ -105,8 +78,8 @@ void drawMur() {
 	myEngine.mvMatrixStack.popMatrix();
 
 	myEngine.mvMatrixStack.pushMatrix();
-		myEngine.mvMatrixStack.addTranslation({0.0f, 0.0f, 100.0f});
-		myEngine.mvMatrixStack.addHomothety({100.0f, 100.0f, 1.0f});
+		myEngine.mvMatrixStack.addTranslation({0.0f, 0.0f, 10.0f*size});
+		myEngine.mvMatrixStack.addHomothety({10.0f*size, 10.0f*size, 1.0f});
 
 		myEngine.updateMvMatrix();
 

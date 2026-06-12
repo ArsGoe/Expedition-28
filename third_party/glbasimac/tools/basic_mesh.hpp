@@ -401,5 +401,3 @@ namespace STP3D {
 };
 
 #endif
-
-

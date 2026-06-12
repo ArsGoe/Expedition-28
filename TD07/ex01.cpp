@@ -70,7 +70,7 @@ void onMouseButton(GLFWwindow* window, int button, int action, int /*mods*/)
 	}
 }
 
-int main(int /*argc*/, char** /*argv*/)
+int main(int /*argc*/, char** argv)
 {
 	/* GLFW initialisation */
 	GLFWwindow* window;
@@ -139,8 +139,13 @@ int main(int /*argc*/, char** /*argv*/)
 		MaCameraFPS(window);
 
 		/* Caméra FPS*/
-
-		drawScene();
+		if (argv[1])
+		{
+			drawScene(argv[1]);
+		}
+		else{
+			drawScene("../TD07/instructions.json");
+		}
 
 		// TO DO EX01 part 3
 		/* Fix camera position */

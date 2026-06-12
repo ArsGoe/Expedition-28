@@ -5,10 +5,7 @@
 #include "glbasimac/glbi_convex_2D_shape.hpp"
 #include "tools/basic_mesh.hpp"
 
-using namespace glbasimac;    // Distance between origin and viewpoint
+#include "glbasimac/json.hpp"
 
-/* OpenGL Engine */
-extern GLBI_Engine myEngine;
 
-void drawSol(int size);
-void drawMur(int size);
+void readJsonLoop(std::string file_name);
