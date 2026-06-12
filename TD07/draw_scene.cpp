@@ -4,10 +4,12 @@
 #include "texture.hpp"
 #include "sol.hpp"
 #include "light.hpp"
+#include "rails.hpp"
+#include "json_read.hpp"
 #include "tools/basic_mesh.hpp"
 #include "tools/gl_tools.hpp"
 #include "tools/vector3d.hpp"
-#include "rails.hpp"
+
 
 /// Camera parameters
 float angle_theta{45.0}; // Angle between x axis and viewpoint
@@ -122,35 +124,12 @@ void axes(){
 	z.drawSet();
 }
 
-void drawScene() {
-	//axes();
+void drawScene(std::string file_name) {
+	axes();
 	myEngine.switchToPhongShading();
 		drawSol();
 		drawMur();
-		myEngine.mvMatrixStack.pushMatrix();
-			myEngine.mvMatrixStack.addTranslation({ 5.0f, 5.0f, 2.5f });
-			myEngine.mvMatrixStack.addHomothety({ 0.4f, 0.4f, 0.6f });
-			myEngine.updateMvMatrix();
-
-			drawGare();
-
-		myEngine.mvMatrixStack.popMatrix();
-
-		myEngine.mvMatrixStack.pushMatrix();
-			myEngine.mvMatrixStack.addTranslation({ 0.0f, 15.f, 3.f });
-			myEngine.mvMatrixStack.addHomothety({ 0.3f, 0.3f, 0.3f });
-			myEngine.updateMvMatrix();
-
-			drawTrain();
-
-		myEngine.mvMatrixStack.popMatrix();
+		readJsonLoop(file_name);
 	myEngine.switchToFlatShading();
-	drawRailDroit();
-	myEngine.mvMatrixStack.pushMatrix();
-		myEngine.mvMatrixStack.addTranslation({0.0, 10.0, 0.0});
-		myEngine.updateMvMatrix();
-			drawBentRail();
-	myEngine.mvMatrixStack.popMatrix();
-	myEngine.updateMvMatrix();
 
 }

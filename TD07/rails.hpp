@@ -5,7 +5,7 @@
 #include "glbasimac/glbi_convex_2D_shape.hpp"
 #include "tools/basic_mesh.hpp"
 
-using namespace glbasimac;    // Distance between origin and viewpoint
+using namespace glbasimac;
 
 /* OpenGL Engine */
 extern GLBI_Engine myEngine;
