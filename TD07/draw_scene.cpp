@@ -14,6 +14,8 @@ bool LightToPhongShading = false;
 GLBI_Engine myEngine;
 
 IndexedMesh* cylinder;
+GLBI_Convex_2D_Shape cercleAvant{3};
+GLBI_Convex_2D_Shape cercleArriere{3};
 GLBI_Convex_2D_Shape cercle{3};
 GLBI_Set_Of_Points x{3};
 GLBI_Set_Of_Points y{3};
@@ -63,9 +65,11 @@ void initCylinder(){
 		cercleUVS.push_back(0.5*cos(angle)+0.5);
 		cercleUVS.push_back(0.5*sin(angle)+0.5);
 	}
+	cercleAvant.initShape(initCercle, cercleUVS, false);
+    cercleAvant.changeNature(GL_TRIANGLE_FAN);
 
-	cercle.initShape(initCercle, cercleUVS);
-	cercle.changeNature(GL_TRIANGLE_FAN);
+    cercleArriere.initShape(initCercle, cercleUVS, true); // normales {0, -1, 0}
+    cercleArriere.changeNature(GL_TRIANGLE_FAN);
 }
 
 void initCube(){
@@ -87,20 +91,13 @@ void initScene() {
 }
 
 void drawCylindreFerme() {
-	//myEngine.setFlatColor(1.0, 0.0, 0.0);
-	cercle.drawShape();
-	//myEngine.setFlatColor(1.0, 1.0, 1.0);
-	cylinder->draw();
-
-	myEngine.mvMatrixStack.pushMatrix();
-
-		myEngine.mvMatrixStack.addTranslation({ 0.0f, 1.f, 0.0f }); // Correction de la taille
-		myEngine.updateMvMatrix();
-
-		//myEngine.setFlatColor(1.0, 0.0, 0.0); // Conversion des couleurs en [0, 1]
-		cercle.drawShape();
-
-	myEngine.mvMatrixStack.popMatrix();
+    cercleAvant.drawShape();
+    cylinder->draw();
+    myEngine.mvMatrixStack.pushMatrix();
+        myEngine.mvMatrixStack.addTranslation({ 0.0f, 1.f, 0.0f });
+        myEngine.updateMvMatrix();
+        cercleArriere.drawShape();
+    myEngine.mvMatrixStack.popMatrix();
 }
 
 void axes(){

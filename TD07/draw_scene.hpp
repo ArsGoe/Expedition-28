@@ -14,6 +14,7 @@ extern float angle_theta;
 extern float angle_phy;
 extern float dist_zoom;
 extern bool LightToPhongShading;
+extern bool CercleArriere;
 
 /* OpenGL Engine */
 extern GLBI_Engine myEngine;

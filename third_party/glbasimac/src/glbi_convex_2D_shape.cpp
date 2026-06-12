@@ -3,7 +3,7 @@
 
 namespace glbasimac {
 
-	void GLBI_Convex_2D_Shape::initShape(std::vector<float> in_coord, std::vector<float> uvs) {
+	void GLBI_Convex_2D_Shape::initShape(std::vector<float> in_coord, std::vector<float> uvs, bool Arriere) {
 		coord_pts.clear();
 		if (dimension == 2) {
 			assert(in_coord.size()%2 == 0);
@@ -21,8 +21,15 @@ namespace glbasimac {
 		std::vector<float> normals(nb_pts * 3, 0.0f);
 
 		//Modifs lights
-		for (int i = 0; i < nb_pts; i++) {
-			normals[3*i + 1] = 1.0f; // normale vers +Z
+		if (Arriere){
+			for (int i = 0; i < nb_pts; i++) {
+				normals[3*i + 1] = 1.0f; // normale vers +Z
+			}
+		}
+		else {
+			for (int i = 0; i < nb_pts; i++) {
+				normals[3*i + 1] = -1.0f; // normale vers +Z
+			}
 		}
 		//Fin modifs light
 
