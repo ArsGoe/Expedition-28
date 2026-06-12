@@ -38,6 +38,7 @@ void onWindowResized(GLFWwindow* /*window*/, int width, int height)
 
 void onKey(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods*/)
 {
+	if (action == GLFW_RELEASE) return;
 	int is_pressed = (action == GLFW_PRESS); 
 	switch(key) {
 		case GLFW_KEY_ESCAPE :
@@ -54,7 +55,7 @@ void onKey(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods
 		if (is_pressed) LightToPhongShading = !LightToPhongShading;
 			break;
 	
-		default: std::cerr<<"Touche non gérée "<<key<<std::endl;
+		default: break;
 	}
 
 }

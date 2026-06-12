@@ -122,7 +122,7 @@ void drawScene() {
 			drawGare();
 
 		myEngine.mvMatrixStack.popMatrix();
-
+		
 		myEngine.mvMatrixStack.pushMatrix();
 			myEngine.mvMatrixStack.addTranslation({ 0.0f, 15.f, 3.f });
 			myEngine.mvMatrixStack.addHomothety({ 0.3f, 0.3f, 0.3f });
