@@ -61,7 +61,7 @@ void readJsonLoop(std::string file_name){
         myEngine.mvMatrixStack.addTranslation({ 5.0f, 5.0f, 2.5f });
 		myEngine.mvMatrixStack.addHomothety({ 0.4f, 0.4f, 0.6f });
 		myEngine.updateMvMatrix();
-		drawBatimentGare();
+		drawGare();
 
 	myEngine.mvMatrixStack.popMatrix();
 
