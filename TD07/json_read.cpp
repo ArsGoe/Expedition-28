@@ -8,6 +8,8 @@
 #include "rails.hpp"
 #include "draw_gare_batiment.hpp"
 #include "draw_train.hpp"
+#include "texture.hpp"
+#include "sol.hpp"
 
 using json = nlohmann::json;
 
@@ -50,6 +52,14 @@ void readJsonLoop(std::string file_name){
 
     json j = json::parse(file);
 
+    // Positionnement de la grille et des murs
+    const auto& size = j["size_grid"];
+
+    drawSol(size);
+	drawMur(size);
+
+
+    // Positionnement des objets sur la grille
     const auto& origin = j["origin"];
 
     int origin_x = origin[0];

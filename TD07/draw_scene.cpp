@@ -126,8 +126,6 @@ void drawScene(std::string file_name) {
 		myEngine.switchToPhongShading();
 	}
 
-	drawSol();
-	drawMur();
 	readJsonLoop(file_name);
 
 	if (LightToPhongShading) {

@@ -10,5 +10,5 @@ using namespace glbasimac;    // Distance between origin and viewpoint
 /* OpenGL Engine */
 extern GLBI_Engine myEngine;
 
-void drawSol();
-void drawMur();
+void drawSol(int size);
+void drawMur(int size);
