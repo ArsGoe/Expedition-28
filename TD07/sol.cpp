@@ -3,6 +3,8 @@
 
 void drawSol() {
     myEngine.mvMatrixStack.pushMatrix();
+		//Pour que le sol soit au sol
+		myEngine.mvMatrixStack.addTranslation({0.f, 0.f, -0.5f});
 		myEngine.mvMatrixStack.addHomothety({100.f, 100.f, 1.f});
 
 		myEngine.updateMvMatrix();
@@ -18,7 +20,7 @@ void drawSol() {
 		float x = -50.0f + i * 10.0f;
 		myEngine.mvMatrixStack.pushMatrix();
 
-			myEngine.mvMatrixStack.addTranslation({x, 0.0f, 0.5f});
+			myEngine.mvMatrixStack.addTranslation({x, 0.0f, 0.0f});
 			myEngine.mvMatrixStack.addHomothety({0.2f, 100.0f, 0.1f});
 
 			myEngine.updateMvMatrix();
@@ -33,7 +35,7 @@ void drawSol() {
 
 		myEngine.mvMatrixStack.pushMatrix();
 
-			myEngine.mvMatrixStack.addTranslation({0.0f, y, 0.5f});
+			myEngine.mvMatrixStack.addTranslation({0.0f, y, 0.0f});
 			myEngine.mvMatrixStack.addHomothety({100.0f, 0.2f, 0.1f});
 
 			myEngine.updateMvMatrix();

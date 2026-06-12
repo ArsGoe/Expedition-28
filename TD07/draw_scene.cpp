@@ -4,6 +4,12 @@
 #include "texture.hpp"
 #include "sol.hpp"
 #include "light.hpp"
+#include "rails.hpp"
+#include "json_read.hpp"
+#include "tools/basic_mesh.hpp"
+#include "tools/gl_tools.hpp"
+#include "tools/vector3d.hpp"
+
 
 /// Caméra
 float angle_theta {45.0};
@@ -17,6 +23,11 @@ IndexedMesh* cylinder;
 GLBI_Convex_2D_Shape cercleAvant{3};
 GLBI_Convex_2D_Shape cercleArriere{3};
 GLBI_Convex_2D_Shape cercle{3};
+
+GLBI_Convex_2D_Shape sides{3};
+GLBI_Convex_2D_Shape sides_mais{3};
+
+/***************************************** Axe XYZ *****************************************/
 GLBI_Set_Of_Points x{3};
 GLBI_Set_Of_Points y{3};
 GLBI_Set_Of_Points z{3};
@@ -27,29 +38,30 @@ void initAxes(){
 	//X EN ROUGE
 	std::vector<float> points_x {0.0, 0.0, 0.0,
 								10.0, 0.0, 0.0};
-	std::vector<float> points_color_x {1.0, 0.0, 0.0,
-								1.0, 0.0, 0.0};
-	x.initSet(points_x,points_color_x);
+	std::vector<float> points_color_x{1.0, 0.0, 0.0,
+									  1.0, 0.0, 0.0};
+	x.initSet(points_x, points_color_x);
 	x.changeNature(GL_LINES);
 
 	//Y EN VERT
 	std::vector<float> points_y {0.0, 0.0, 0.0,
 								0.0, 10.0, 0.0};
-	std::vector<float> points_color_y {0.0, 1.0, 0.0,
-										0.0, 1.0, 0.0};
-	y.initSet(points_y,points_color_y);
+	std::vector<float> points_color_y{0.0, 1.0, 0.0,
+									  0.0, 1.0, 0.0};
+	y.initSet(points_y, points_color_y);
 	y.changeNature(GL_LINES);
 
 	//Z EN BLEU
 	std::vector<float> points_z {0.0, 0.0, 0.0,
 								0.0, 0.0, 10.0};
-	std::vector<float> points_color_z {0.0, 0.0, 1.0,
-										0.0, 0.0, 1.0};
-	z.initSet(points_z,points_color_z);
+	std::vector<float> points_color_z{0.0, 0.0, 1.0,
+									  0.0, 0.0, 1.0};
+	z.initSet(points_z, points_color_z);
 	z.changeNature(GL_LINES);
 }
 
-void initCylinder(){
+void initCylinder()
+{
 	cylinder = basicCylinder(1.0, 1.0);
 	cylinder->createVAO();
 
@@ -88,6 +100,8 @@ void initScene() {
 	initCube();
 	initSphere();
 	activeLight();
+	initFirstBentRail(sr, 3);
+	initSecondBentRail(sr, 7);
 }
 
 void drawCylindreFerme() {
@@ -106,36 +120,17 @@ void axes(){
 	z.drawSet();
 }
 
-void drawScene() {
-	//axes();
+void drawScene(std::string file_name) {
+	axes();
 	if (LightToPhongShading) {
 		myEngine.switchToPhongShading();
 	}
 
-		drawSol();
-		drawMur();
-		myEngine.mvMatrixStack.pushMatrix();
-			myEngine.mvMatrixStack.addTranslation({ 5.0f, 5.0f, 2.5f });
-			myEngine.mvMatrixStack.addHomothety({ 0.4f, 0.4f, 0.6f });
-			myEngine.updateMvMatrix();
+	drawSol();
+	drawMur();
+	readJsonLoop(file_name);
 
-			drawGare();
-
-		myEngine.mvMatrixStack.popMatrix();
-		
-		myEngine.mvMatrixStack.pushMatrix();
-			myEngine.mvMatrixStack.addTranslation({ 0.0f, 15.f, 3.f });
-			myEngine.mvMatrixStack.addHomothety({ 0.3f, 0.3f, 0.3f });
-			myEngine.updateMvMatrix();
-
-			drawTrain();
-
-		myEngine.mvMatrixStack.popMatrix();
-
-		if (LightToPhongShading) {
-			myEngine.switchToFlatShading();
-		}
+	if (LightToPhongShading) {
+		myEngine.switchToFlatShading();
+	}
 }
-
-
-

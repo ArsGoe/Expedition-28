@@ -29,7 +29,7 @@ void drawArm();
 
 void drawPan();
 
-void drawScene();
+void drawScene(std::string file_name);
 
 void initCylinder();
 
