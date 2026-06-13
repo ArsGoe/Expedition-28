@@ -2,22 +2,26 @@
 #include "GLFW/glfw3.h"
 #include "glad/glad.h"
 #include "draw_scene.hpp"
+#include "camera.hpp"
 #include "tools/shaders.hpp"
 #include <iostream>
 
 using namespace glbasimac;
 using namespace STP3D;
 
+/* Formes Gare */
+IndexedMesh* rectangle;
+
 /* Window properties */
 static const unsigned int WINDOW_WIDTH = 1200;
 static const unsigned int WINDOW_HEIGHT = 800;
-static const char WINDOW_TITLE[] = "TD04 Ex01";
+static const char WINDOW_TITLE[] = "Gare";
 static float aspectRatio = 1.0f;
 
 /* Minimal time wanted between two images */
 static const double FRAMERATE_IN_SECONDS = 1. / 30.;
 
-/* Error handling function */
+/* Error hadling function */
 void onError(int error, const char* description) {
 	std::cout << "GLFW Error ("<<error<<") : " << description << std::endl;
 }
@@ -34,9 +38,9 @@ void onWindowResized(GLFWwindow* /*window*/, int width, int height)
 
 void onKey(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods*/)
 {
+	if (action == GLFW_RELEASE) return;
 	int is_pressed = (action == GLFW_PRESS); 
 	switch(key) {
-		case GLFW_KEY_A :
 		case GLFW_KEY_ESCAPE :
 			glfwSetWindowShouldClose(window, GLFW_TRUE);
 			break;
@@ -45,31 +49,13 @@ void onKey(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods
 			break;
 		case GLFW_KEY_P:
 			if (is_pressed) glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
-
-		// TO DO EX01 part 3
-		case GLFW_KEY_UP :
-			angle_phy += 1.0;
-			break;
-
-		case GLFW_KEY_DOWN :
-			angle_phy -= 1.0;
-			break;
-		case GLFW_KEY_LEFT :
-			angle_theta += 1.0;
-			break;
-		case GLFW_KEY_RIGHT :
-			angle_theta -= 1.0;
 			break;
 
 		case GLFW_KEY_R :
-			//> EXO 3
-			//< FIN EXO 3
+		if (is_pressed) LightToPhongShading = !LightToPhongShading;
 			break;
-		case GLFW_KEY_T :
-			//> EXO 3
-			//< FIN EXO 3
-			break;
-		default: std::cerr<<"Touche non gérée "<<key<<std::endl;
+	
+		default: break;
 	}
 
 }
@@ -84,7 +70,7 @@ void onMouseButton(GLFWwindow* window, int button, int action, int /*mods*/)
 	}
 }
 
-int main(int /*argc*/, char** /*argv*/)
+int main(int /*argc*/, char** argv)
 {
 	/* GLFW initialisation */
 	GLFWwindow* window;
@@ -120,6 +106,9 @@ int main(int /*argc*/, char** /*argv*/)
 	glfwSetWindowSizeCallback(window,onWindowResized);
 	glfwSetKeyCallback(window, onKey);
 	glfwSetMouseButtonCallback(window, onMouseButton);
+	glfwSetCursorPosCallback(window, mouse_callback);
+	//Pour qu'on puisse faire un 360°
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	std::cout<<"Engine init"<<std::endl;
 	// TO DO EX01 part 2
@@ -139,12 +128,24 @@ int main(int /*argc*/, char** /*argv*/)
 		double startTime = glfwGetTime();
 
 		/* Render begins here */
-		glClearColor(0.f,0.0f,0.2f,0.0f);
+		glClearColor(1.0f,1.0f,1.0f,0.0f);
 
 		// TO DO EX01 part 2
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_DEPTH_TEST);
-		drawScene();
+
+		/* Caméra FPS*/
+
+		MaCameraFPS(window);
+
+		/* Caméra FPS*/
+		if (argv[1])
+		{
+			drawScene(argv[1]);
+		}
+		else{
+			drawScene("../TD07/instructions.json");
+		}
 
 		// TO DO EX01 part 3
 		/* Fix camera position */
@@ -158,7 +159,6 @@ int main(int /*argc*/, char** /*argv*/)
 		Matrix4D viewMatrix = Matrix4D::lookAt(pos_camera,viewed_point,up_vector);
 		myEngine.setViewMatrix(viewMatrix);
 		myEngine.updateMvMatrix();
-
 		
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);

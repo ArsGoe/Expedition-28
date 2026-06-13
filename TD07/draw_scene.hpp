@@ -10,9 +10,11 @@ using namespace glbasimac;
 /* Camera parameters and functions */
 static const float Z_NEAR {0.1f};
 static const float Z_FAR {500.f};
-extern float angle_theta;      // Angle between x axis and viewpoint
-extern float angle_phy  ;      // Angle between z axis and viewpoint
-extern float dist_zoom  ;      // Distance between origin and viewpoint
+extern float angle_theta;
+extern float angle_phy;
+extern float dist_zoom;
+extern bool LightToPhongShading;
+extern bool CercleArriere;
 
 /* OpenGL Engine */
 extern GLBI_Engine myEngine;
@@ -27,5 +29,13 @@ void drawArm();
 
 void drawPan();
 
-void drawScene();
+void drawScene(std::string file_name);
 
+void initCylinder();
+
+void initCube();
+
+void drawCylindreFerme();
+
+extern IndexedMesh* cube;
+extern IndexedMesh* sphere;
